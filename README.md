@@ -29,7 +29,7 @@ All empirical data are from the [Human Connectome Project](https://db.humanconne
 
 ## Dependencies
 
-Some important aspects you need to do before running demo_eigenmode_calculation.sh, surface_eigenmodes.py, or volume_eigenmodes.py
+Some important aspects you need to do before running `demo_eigenmode_calculation.sh`, `surface_eigenmodes.py`, or `volume_eigenmodes.py`
 
 1. Install [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) and load module (only for HPC systems).
 2. Install [Connectome Workbench](https://www.humanconnectome.org/software/get-connectome-workbench) and load module (only for HPC systems).
