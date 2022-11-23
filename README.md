@@ -31,8 +31,8 @@ Some important aspects you need to do before running surface_eigenmodes.py and v
 
 Some important aspects you need to do before running the MATLAB scripts
 
-1. Download the gifti [library](https://github.com/gllmflndn/gifti) and add to Matlab path.
-2. Download the cifti [library](https://github.com/Washington-University/cifti-matlab) and add to Matlab path.
+1. Download the [gifti](https://github.com/gllmflndn/gifti) library and add to Matlab path.
+2. Download the [cifti](https://github.com/Washington-University/cifti-matlab) library and add to Matlab path.
 3. Download [cbrewer](https://au.mathworks.com/matlabcentral/fileexchange/34087-cbrewer-colorbrewer-schemes-for-matlab) and add to Matlab path.
 4. Download Stuart Oldham's [repository](https://github.com/StuartJO/plotSurfaceROIBoundary) for drawing ROI boundaries on a surface and add to Matlab path. 
 
