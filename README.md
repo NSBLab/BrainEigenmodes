@@ -23,7 +23,7 @@ Read the comments and documentation within each code to guide you in your usage.
 
 ## Downloading data
 
-Due to their file sizes exceeding the limit allowed in GitHub, you will need to fill the `data/examples`, `data/examples`, `data/results`, and `data/template_eigenmodes` directories with some data that you can downloaded from this Zenodo repository (LINK TO BE UPDATED).
+Due to their file sizes exceeding the limit allowed in GitHub, you will need to fill the `data/examples`, `data/results`, and `data/template_eigenmodes` directories with some data that you can downloaded from this Zenodo repository (LINK TO BE UPDATED).
 
 All empirical data are from the [Human Connectome Project](https://db.humanconnectome.org/). Please consult the link for detailed information about access and licensing.
 
