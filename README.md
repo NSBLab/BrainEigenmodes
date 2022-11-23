@@ -22,14 +22,14 @@ Download the repository and you're good to go
 
 ## Dependencies
 
-Some important aspects you need to do before running surface_eigenmodes.py and volume_eigenmodes.py
+Some important aspects you need to do before running demo_eigenmode_calculation.sh, surface_eigenmodes.py, or volume_eigenmodes.py
 
 1. Install [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) and load module (only for HPC systems).
 2. Install [Connectome Workbench](https://www.humanconnectome.org/software/get-connectome-workbench) and load module (only for HPC systems).
 3. Install [Gmsh](https://gmsh.info/) and load module (only for HPC systems).
 4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
 
-Some important aspects you need to do before running the MATLAB scripts
+Some important aspects you need to do before running the MATLAB-based scripts
 
 1. Download the [gifti](https://github.com/gllmflndn/gifti) library and add to Matlab path.
 2. Download the [cifti](https://github.com/Washington-University/cifti-matlab) library and add to Matlab path.
