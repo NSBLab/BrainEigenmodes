@@ -32,7 +32,7 @@
 surface_interest='fsLR_32k'
 structure='midthickness'
 hemispheres='lh rh'
-totalEigenNumbers=200
+num_modes=200
 save_cut=0
 
 for hemisphere in ${hemispheres}; do
@@ -44,22 +44,22 @@ for hemisphere in ${hemispheres}; do
 	# with cortex mask (remove medial wall)
     # this is the advisable way
 	is_mask=1
-    output_eval_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_eval_${totalEigenNumbers}.txt
-    output_emode_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_emode_${totalEigenNumbers}.txt
+    output_eval_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}2.txt
+    output_emode_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}2.txt
 
     python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
-    							 -save_cut ${save_cut} -N ${totalEigenNumbers} -is_mask ${is_mask}
+    							 -save_cut ${save_cut} -N ${num_modes} -is_mask ${is_mask}
                 
 
     # without cortex mask
     is_mask=0
-    output_eval_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_eval_${totalEigenNumbers}.txt
-    output_emode_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_emode_${totalEigenNumbers}.txt
+    output_eval_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}2.txt
+    output_emode_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}2.txt
 
     python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
-    							 -save_cut ${save_cut} -N ${totalEigenNumbers} -is_mask ${is_mask}
+    							 -save_cut ${save_cut} -N ${num_modes} -is_mask ${is_mask}
 done
 
 
@@ -76,7 +76,7 @@ done
 
 structure='tha'
 hemispheres='lh rh'
-totalEigenNumbers=31
+num_modes=31
 normalization_type='none'
 normalization_factor=1
 
@@ -84,11 +84,11 @@ for hemisphere in ${hemispheres}; do
     echo 'Processing ${hemisphere}'
 
     nifti_input_filename=data/template_surfaces_volumes/hcp_${structure}-${hemisphere}_thr25.nii.gz
-    nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${totalEigenNumbers}.nii.gz
-    output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${totalEigenNumbers}.txt
-    output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${totalEigenNumbers}.txt
+    nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}2.nii.gz
+    output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${num_modes}2.txt
+    output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}2.txt
     
     python volume_eigenmodes.py ${nifti_input_filename} ${nifti_output_filename} \
                                 ${output_eval_filename} ${output_emode_filename} \
-                                -N ${totalEigenNumbers} -norm ${normalization_type} -normfactor ${normalization_factor}
+                                -N ${num_modes} -norm ${normalization_type} -normfactor ${normalization_factor}
 done

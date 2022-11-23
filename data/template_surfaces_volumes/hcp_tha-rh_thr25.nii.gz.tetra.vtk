@@ -1,5 +1,5 @@
 # vtk DataFile Version 2.0
-hcp_thalamus-rh_thr25.nii.gz, Created by Gmsh 4.11.0 
+hcp_tha-rh_thr25.nii.gz, Created by Gmsh 4.11.0 
 ASCII
 DATASET POLYDATA
 POINTS 1686 float

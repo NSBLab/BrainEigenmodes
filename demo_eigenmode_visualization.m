@@ -41,9 +41,12 @@ surface_midthickness.faces = faces';
 cortex = dlmread(sprintf('data/template_surfaces_volumes/%s_cortex-%s_mask.txt', surface_interest, hemisphere));
 cortex_ind = find(cortex);
 
-% Load fsLR_32k template midthickness surface eigenmodes
-num_modes = 200;
-eigenmodes = dlmread(sprintf('data/template_eigenmodes/%s_midthickness-%s_emode_%i.txt', surface_interest, hemisphere, num_modes));
+% Load 50 fsLR_32k template midthickness surface eigenmodes
+num_modes = 50;
+eigenmodes = dlmread(sprintf('data/examples/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+
+% Replace above line with the one below and make num_modes = 200 if using the 200 modes provided at data/template_eigenmodes
+% eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
 
 % =========================================================================
 %                         Visualize one eigenmode                          
@@ -102,7 +105,11 @@ mask_filename = sprintf('data/template_surfaces_volumes/hcp_%s-%s_thr25.nii.gz',
 V_mask = niftiread(mask_filename);
 
 % Load volume eigenmodes
-eigenmodes_filename = sprintf('data/results/subcortical/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
+eigenmodes_filename = sprintf('data/examples/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
+
+% Replace above line with the one below if using the modes provided at data/results/subcortical
+% eigenmodes_filename = sprintf('data/results/subcortical/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
+
 V_eigenmodes = niftiread(eigenmodes_filename);
 
 % =========================================================================

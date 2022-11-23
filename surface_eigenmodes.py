@@ -14,26 +14,26 @@ import brainspace.mesh as mesh
 import os
 from argparse import ArgumentParser
 
-def calc_eig(tria, totalEigenNumbers):
+def calc_eig(tria, num_modes):
     """Calculate the eigenvalues and eigenmodes of a surface.
 
     Parameters
     ----------
     tria : lapy compatible object
         Loaded vtk object corresponding to a surface triangular mesh
-    totalEigenNumbers : int
+    num_modes : int
         Number of eigenmodes to be calculated
 
     Returns
     ------
-    evals : array (totalEigenNumbers x 1)
+    evals : array (num_modes x 1)
         Eigenvalues
-    emodes : array (number of surface points x totalEigenNumbers)
+    emodes : array (number of surface points x num_modes)
         Eigenmodes
     """
     
     fem = Solver(tria)
-    evals, emodes = fem.eigs(k=totalEigenNumbers)
+    evals, emodes = fem.eigs(k=num_modes)
     
     return evals, emodes
 
@@ -87,7 +87,7 @@ def get_indices(surface_original, surface_new):
     
     return indices
 
-def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, totalEigenNumbers):
+def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes):
     """Main function to calculate the eigenmodes of a cortical surface with application of a mask (e.g., to remove the medial wall).
 
     Parameters
@@ -102,7 +102,7 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
         Filename of text file where the output eigenmodes will be stored
     save_cut : boolean 
         Boolean to decide if the new surface with mask applied will be saved to a new surface file
-    totalEigenNumbers : int
+    num_modes : int
         Number of eigenmodes to be calculated          
     """
 
@@ -136,7 +136,7 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
         tria.t = np.reshape(surface_cut.Polygons, [surface_cut.n_cells, 4])[:,1:4]
 
     # calculate eigenvalues and eigenmodes
-    evals, emodes = calc_eig(tria, totalEigenNumbers)
+    evals, emodes = calc_eig(tria, num_modes)
     
     # get indices of vertices of surface_orig that match surface_cut
     indices = get_indices(surface_orig, surface_cut)
@@ -154,7 +154,7 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
         if os.path.exists('temp_cut.vtk'):
             os.remove('temp_cut.vtk')
 
-def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, totalEigenNumbers):
+def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes):
     """Main function to calculate the eigenmodes of a cortical surface without application of a mask.
 
     Parameters
@@ -165,7 +165,7 @@ def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename,
         Filename of text file where the output eigenvalues will be stored
     output_emode_filename : str  
         Filename of text file where the output eigenmodes will be stored
-    totalEigenNumbers : int
+    num_modes : int
         Number of eigenmodes to be calculated          
     """
 
@@ -173,7 +173,7 @@ def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename,
     tria = TriaIO.import_vtk(surface_input_filename)
 
     # calculate eigenvalues and eigenmodes
-    evals, emodes = calc_eig(tria, totalEigenNumbers)
+    evals, emodes = calc_eig(tria, num_modes)
         
     # save eigenmode results
     np.savetxt(output_eval_filename, evals)
@@ -186,7 +186,7 @@ def main(raw_args=None):
     parser.add_argument("output_eval_filename", help="An output text file where the eigenvalues will be stored", metavar="evals.txt")
     parser.add_argument("output_emode_filename", help="An output text file where the eigenmodes will be stored", metavar="emodes.txt")
     parser.add_argument("-save_cut", dest="save_cut", default=0, help="Logical value to decide whether to write the masked version of the input surface", metavar="0")
-    parser.add_argument("-N", dest="totalEigenNumbers", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
+    parser.add_argument("-N", dest="num_modes", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
     parser.add_argument("-is_mask", dest="is_mask", default=1, help="Logical value to decide whether to apply the mask", metavar="1")
 
     #--------------------    Parsing the inputs from terminal:   -------------------
@@ -196,14 +196,14 @@ def main(raw_args=None):
     output_eval_filename     = args.output_eval_filename
     output_emode_filename    = args.output_emode_filename
     save_cut                 = int(args.save_cut)
-    totalEigenNumbers        = int(args.totalEigenNumbers)
+    num_modes        = int(args.num_modes)
     is_mask                  = int(args.is_mask)
     #-------------------------------------------------------------------------------
    
     if is_mask == 1:
-        calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, totalEigenNumbers)
+        calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes)
     else:
-        calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, totalEigenNumbers)
+        calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes)
     
    
 if __name__ == '__main__':
@@ -216,7 +216,7 @@ if __name__ == '__main__':
     # surface_interest = 'fsLR_32k'
     # structure = 'midthickness'
     # hemispheres = ['lh', 'rh']
-    # totalEigenNumbers = 200
+    # num_modes = 200
     # save_cut = 0
     
     # for hemisphere in hemispheres:
@@ -227,15 +227,15 @@ if __name__ == '__main__':
         
     #     # with cortex mask (remove medial wall)
     #     # this is the advisable way
-    #     output_eval_filename = 'data/template_eigenmodes/' + surface_interest + '_' + structure + '-' + hemisphere + '_eval_' + str(totalEigenNumbers) + '.txt'
-    #     output_emode_filename = 'data/template_eigenmodes/' + surface_interest + '_' + structure + '-' + hemisphere + '_emode_' + str(totalEigenNumbers) + '.txt'
+    #     output_eval_filename = 'data/template_eigenmodes/' + surface_interest + '_' + structure + '-' + hemisphere + '_eval_' + str(num_modes) + '.txt'
+    #     output_emode_filename = 'data/template_eigenmodes/' + surface_interest + '_' + structure + '-' + hemisphere + '_emode_' + str(num_modes) + '.txt'
 
-    #     calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, totalEigenNumbers)
+    #     calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes)
         
     #     # without cortex mask
-    #     output_eval_filename = 'data/template_eigenmodes/' + 'nomask_' + surface_interest + '_' + structure + '-' + hemisphere + '_eval_' + str(totalEigenNumbers) + '.txt'
-    #     output_emode_filename = 'data/template_eigenmodes/' + 'nomask_' + surface_interest + '_' + structure + '-' + hemisphere + '_emode_' + str(totalEigenNumbers) + '.txt'
+    #     output_eval_filename = 'data/template_eigenmodes/' + 'nomask_' + surface_interest + '_' + structure + '-' + hemisphere + '_eval_' + str(num_modes) + '.txt'
+    #     output_emode_filename = 'data/template_eigenmodes/' + 'nomask_' + surface_interest + '_' + structure + '-' + hemisphere + '_emode_' + str(num_modes) + '.txt'
 
-    #     calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, totalEigenNumbers)
+    #     calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes)
             
  

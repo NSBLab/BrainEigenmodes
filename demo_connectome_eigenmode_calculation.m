@@ -17,6 +17,8 @@
 %%%         change the connectome variable below. However make sure that
 %%%         the variable is an array of size
 %%%         [number of vertices x number of vertices].
+%%% NOTE 3: Current demo uses 50 modes. For a proper analysis, we advise 
+%%%         using between 100 to 200 modes.
 %%%
 %%% Original: James Pang, Monash University, 2022
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,15 +105,15 @@ surface_with_connectome(surface_with_connectome>0) = 1;
 % For full calculation, set is_demo_calculate = 1
 is_demo_calculate = 0;
 if is_demo_calculate
-    num_modes = 200;
+    num_modes = 50;
     [eig_vec_temp, eig_val] = calc_network_eigenmode(surface_with_connectome, num_modes);
     
     % Bring back medial wall vertices with zero values
     eig_vec = zeros(num_vertices, num_modes);
     eig_vec(cortex_ind,:) = eig_vec_temp(:,1:num_modes);
-%     save(sprintf('data/examples/synthetic_connectome_eigenmodes-%s_%i.mat', hemisphere, num_modes), 'eig_val', 'eig_vec', '-v7.3')
+    save(sprintf('data/examples/synthetic_connectome_eigenmodes-%s_%i.mat', hemisphere, num_modes), 'eig_val', 'eig_vec', '-v7.3')
 else
-    num_modes = 200;
+    num_modes = 50;
     load(sprintf('data/examples/synthetic_connectome_eigenmodes-%s_%i.mat', hemisphere, num_modes), 'eig_vec')
 end
 
@@ -183,7 +185,7 @@ connectome(1:1+size(connectome,1):end) = 0;
 % For full calculation, set is_demo_calculate = 1
 is_demo_calculate = 0;
 if is_demo_calculate
-    num_modes = 200;
+    num_modes = 50;
     [eig_vec_temp, eig_val] = calc_network_eigenmode(connectome, num_modes);
     
     % Bring back medial wall vertices with zero values
@@ -191,7 +193,7 @@ if is_demo_calculate
     eig_vec(cortex_ind,:) = eig_vec_temp(:,1:num_modes);
     save(sprintf('data/examples/synthetic_EDRconnectome_eigenmodes-%s_%i.mat', hemisphere, num_modes), 'eig_val', 'eig_vec', '-v7.3')
 else
-    num_modes = 200;
+    num_modes = 50;
     load(sprintf('data/examples/synthetic_EDRconnectome_eigenmodes-%s_%i.mat', hemisphere, num_modes), 'eig_vec')
 end
 

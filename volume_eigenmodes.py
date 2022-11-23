@@ -188,7 +188,7 @@ def normalize_vtk(tet, nifti_input_filename, normalization_type='none', normaliz
 
     return tet_norm
 
-def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, totalEigenNumbers, normalization_type='none', normalization_factor=1):
+def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, num_modes, normalization_type='none', normalization_factor=1):
     """Calculate the eigenvalues and eigenmodes of the ROI volume in a nifti file.
 
     Parameters
@@ -199,7 +199,7 @@ def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, 
         Filename of text file where the output eigenvalues will be stored
     output_emode_filename : str  
         Filename of text file where the output eigenmodes (in tetrahedral surface space) will be stored    
-    totalEigenNumbers : int
+    num_modes : int
         Number of eigenmodes to be calculated
     normalization_type : str (default: 'none')
         Type of normalization
@@ -212,9 +212,9 @@ def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, 
 
     Returns
     ------
-    evals: array (totalEigenNumbers x 1)
+    evals: array (num_modes x 1)
         Eigenvalues
-    emodes: array (number of tetrahedral surface points x totalEigenNumbers)
+    emodes: array (number of tetrahedral surface points x num_modes)
         Eigenmodes
     """
 
@@ -229,7 +229,7 @@ def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, 
 
     # calculate eigenvalues and eigenmodes
     fem = Solver(tetra_norm)
-    evals, emodes = fem.eigs(k=totalEigenNumbers)
+    evals, emodes = fem.eigs(k=num_modes)
     
     output_eval_file_main, output_eval_file_ext = os.path.splitext(output_eval_filename)
     output_emode_file_main, output_emode_file_ext = os.path.splitext(output_emode_filename)
@@ -243,7 +243,7 @@ def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, 
     
     return evals, emodes
 
-def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, totalEigenNumbers, normalization_type='none', normalization_factor=1):
+def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, num_modes, normalization_type='none', normalization_factor=1):
     """Main function to calculate the eigenmodes of the ROI volume in a nifti file.
 
     Parameters
@@ -256,7 +256,7 @@ def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_e
         Filename of text file where the output eigenvalues will be stored
     output_emode_filename : str  
         Filename of text file where the output eigenmodes (in tetrahedral surface space) will be stored    
-    totalEigenNumbers : int
+    num_modes : int
         Number of eigenmodes to be calculated
     normalization_type : str (default: 'none')
         Type of normalization
@@ -269,7 +269,7 @@ def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_e
     """
 
     # calculate eigenvalues and eigenmodes
-    evals, emodes = calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, totalEigenNumbers, normalization_type, normalization_factor)
+    evals, emodes = calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, num_modes, normalization_type, normalization_factor)
 
 
     # project eigenmodes in tetrahedral surface space into volume space
@@ -302,13 +302,13 @@ def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_e
     # initialize nifti output array
     new_shape = np.array(roi_data.shape)
     if roi_data.ndim>3:
-        new_shape[3] = totalEigenNumbers
+        new_shape[3] = num_modes
     else:
-        new_shape = np.append(new_shape, totalEigenNumbers)
+        new_shape = np.append(new_shape, num_modes)
     new_data = np.zeros(new_shape)
 
     # perform interpolation of eigenmodes from tetrahedral surface space to volume space
-    for mode in range(0, totalEigenNumbers):
+    for mode in range(0, num_modes):
         interpolated_data = griddata(points_surface, emodes[:,mode], np.transpose(points2[0:3,:]), method='linear')
         for ind in range(0, len(interpolated_data)):
             new_data[xx[ind],yy[ind],zz[ind],mode] = interpolated_data[ind]
@@ -331,7 +331,7 @@ def main(raw_args=None):
     parser.add_argument("nifti_output_filename", help="An output nifti where the eigenmodes in volume space will be stored", metavar="emodes.nii.gz")
     parser.add_argument("output_eval_filename", help="An output text file where the eigenvalues will be stored", metavar="evals.txt")
     parser.add_argument("output_emode_filename", help="An output text file where the eigenmods in tetrahedral surface space will be stored", metavar="emodes.txt")
-    parser.add_argument("-N", dest="totalEigenNumbers", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
+    parser.add_argument("-N", dest="num_modes", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
     parser.add_argument("-norm", dest="normalization_type", default='none', help="Type of normalization of tetrahedral surface", metavar="none")
     parser.add_argument("-normfactor", dest="normalization_factor", default=1, help="Value of constant normalization factor of tetrahedral surface", metavar="1")
 
@@ -341,12 +341,12 @@ def main(raw_args=None):
     nifti_output_filename   = args.nifti_output_filename
     output_eval_filename    = args.output_eval_filename
     output_emode_filename   = args.output_emode_filename
-    totalEigenNumbers       = int(args.totalEigenNumbers)
+    num_modes       = int(args.num_modes)
     normalization_type      = args.normalization_type
     normalization_factor    = float(args.normalization_factor)
     #-------------------------------------------------------------------------------
    
-    calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, totalEigenNumbers, normalization_type, normalization_factor)
+    calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, num_modes, normalization_type, normalization_factor)
    
 
 if __name__ == '__main__':
@@ -358,7 +358,7 @@ if __name__ == '__main__':
     # running within python
     # structures = ['tha']
     # hemispheres = ['lh', 'rh']
-    # totalEigenNumbers = 30
+    # num_modes = 30
     # normalization_type = 'none'
     # normalization_factor = 1
 
@@ -366,9 +366,9 @@ if __name__ == '__main__':
     #     for hemisphere in hemispheres:
 
     #         nifti_input_filename = 'data/template_surfaces_volumes/hcp_' + structure + '-' + hemisphere + '_thr25.nii.gz'
-    #         nifti_output_filename = 'data/template_eigenmodes/hcp_' structure + '-' + hemisphere + '_emode_' + str(totalEigenNumbers) + '.nii.gz'
-    #         output_eval_filename = 'data/template_eigenmodes/hcp' + structure + '-' + hemisphere + '_eval_' + str(totalEigenNumbers) + '.txt'
-    #         output_emode_filename = 'data/template_eigenmodes/hcp' + structure + '-' + hemisphere + '_emode_' + str(totalEigenNumbers) + '.txt'
+    #         nifti_output_filename = 'data/template_eigenmodes/hcp_' structure + '-' + hemisphere + '_emode_' + str(num_modes) + '.nii.gz'
+    #         output_eval_filename = 'data/template_eigenmodes/hcp' + structure + '-' + hemisphere + '_eval_' + str(num_modes) + '.txt'
+    #         output_emode_filename = 'data/template_eigenmodes/hcp' + structure + '-' + hemisphere + '_emode_' + str(num_modes) + '.txt'
             
-    #         calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, totalEigenNumbers, normalization_type, normalization_factor):
+    #         calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_eval_filename, output_emode_filename, num_modes, normalization_type, normalization_factor):
     

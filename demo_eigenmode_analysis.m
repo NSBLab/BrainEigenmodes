@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% demo_eigenmode_analysis.m
 %%%
-%%% MATLAB script to demonstrate how to use eigenmodes to analyze fMRI
-%%% data. In particular, the script demonstrates how to
+%%% MATLAB script to demonstrate how to use surface eigenmodes to analyze 
+%%% fMRI data. In particular, the script demonstrates how to
 %%% (1) reconstruct a task fMRI spatial map,
 %%% (2) reconstruct a resting-state fMRI spatiotemporal map and functional
 %%%     connectivity (FC) matrix, and
@@ -13,6 +13,9 @@
 %%%         Just change the eigenmodes variable below. However, make sure
 %%%         that the variable is an array of size
 %%%         [number of vertices x number of modes]. 
+%%% NOTE 2: Current demo uses 50 modes. For a proper analysis, we advise 
+%%%         using between 100 to 200 modes. 200 template geometric 
+%%%         eigenmodes are provided in data/template_eigenmodes.
 %%%
 %%% Original: James Pang, Monash University, 2022
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,14 +41,17 @@ cortex_ind = find(cortex);
 %% Reconstruct a single-subject task fMRI spatial map
 
 hemisphere = 'lh';
-num_modes = 200;
+num_modes = 50;
 
 % =========================================================================
 %                    Load eigenmodes and empirical data                    
 % =========================================================================
 
-% Load fsLR_32k template midthickness surface eigenmodes
-eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+% Load 50 fsLR_32k template midthickness surface eigenmodes
+eigenmodes = dlmread(sprintf('data/examples/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+
+% Replace above line with the one below and make num_modes = 200 if using the 200 modes provided at data/template_eigenmodes
+% eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
 
 % Load example single-subject tfMRI z-stat data
 data = load(sprintf('data/examples/subject_tfMRI_zstat-%s.mat', hemisphere));
@@ -65,6 +71,8 @@ end
 % =========================================================================
 %     Calculate reconstruction accuracy using 1 to num_modes eigenmodes    
 % =========================================================================
+
+% reconstruction accuracy = correlation of empirical and reconstructed data
 
 % At vertex level
 recon_corr_vertex = zeros(1, num_modes);               
@@ -100,8 +108,8 @@ set(gca, 'fontsize', 10, 'ticklength', [0.02 0.02], 'xlim', [1 num_modes], 'ylim
 xlabel('number of modes', 'fontsize', 12)
 ylabel('reconstruction accuracy', 'fontsize', 12)
 
-% Reconstructed spatial map using N = 200 modes
-N = 200;
+% Reconstructed spatial map using N = num_modes modes
+N = num_modes;
 surface_to_plot = surface_midthickness;
 data_to_plot = eigenmodes(:, 1:N)*recon_beta(1:N,N);
 medial_wall = find(cortex==0);
@@ -113,14 +121,17 @@ fig.Name = sprintf('tfMRI reconstruction - surface map using %i modes', N);
 %% Reconstruct a single-subject resting-state fMRI spatiotemporal map and FC matrix
 
 hemisphere = 'lh';
-num_modes = 200;
+num_modes = 50;
 
 % =========================================================================
 %                    Load eigenmodes and empirical data                    
 % =========================================================================
 
-% Load fsLR_32k template midthickness surface eigenmodes
-eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+% Load 50 fsLR_32k template midthickness surface eigenmodes
+eigenmodes = dlmread(sprintf('data/examples/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+
+% Replace above line with the one below and make num_modes = 200 if using the 200 modes provided at data/template_eigenmodes
+% eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
 
 % Load example single-subject rfMRI time series data
 data = load(sprintf('data/examples/subject_rfMRI_timeseries-%s.mat', hemisphere));
@@ -141,6 +152,8 @@ end
 % =========================================================================
 %     Calculate reconstruction accuracy using 1 to num_modes eigenmodes    
 % =========================================================================
+
+% reconstruction accuracy = correlation of empirical and reconstructed data
 
 % At parcellated level
 parc_name = 'Glasser360';
@@ -190,8 +203,8 @@ set(gca, 'fontsize', 10, 'ticklength', [0.02 0.02], 'xlim', [1 num_modes], 'ylim
 xlabel('number of modes', 'fontsize', 12)
 ylabel('reconstruction accuracy', 'fontsize', 12)
 
-% Reconstructed FC using N = 200 modes
-N = 200;
+% Reconstructed FC using N = num_modes modes
+N = num_modes;
 FC_recon = zeros(num_parcels, num_parcels);
 FC_recon(triu_ind) = FCvec_recon(:,N);
 FC_recon = FC_recon + FC_recon';
@@ -211,14 +224,17 @@ axis image
 %% Calculate modal power spectral content of spatial maps
 
 hemisphere = 'lh';
-num_modes = 200;
+num_modes = 50;
 
 % =========================================================================
 %                   Load eigenmodes and empirical data
 % =========================================================================
 
-% Load fsLR_32k template midthickness surface eigenmodes
-eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+% Load 50 fsLR_32k template midthickness surface eigenmodes
+eigenmodes = dlmread(sprintf('data/examples/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
+
+% Replace above line with the one below and make num_modes = 200 if using the 200 modes provided at data/template_eigenmodes
+% eigenmodes = dlmread(sprintf('data/template_eigenmodes/fsLR_32k_midthickness-%s_emode_%i.txt', hemisphere, num_modes));
 
 % Load example neurovault spatial map
 if strcmpi(hemisphere, 'lh')
