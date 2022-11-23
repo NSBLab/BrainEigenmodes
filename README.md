@@ -12,8 +12,8 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 3. `surface_eigenmodes.py`: Python code to calculate geometric eigenmodes of a cortical surface
 4. `volume_eigenmodes.py`: Python code to calculate geometric eigenmodes of a 3D volume
 5. `demo_eigenmode_calculation.sh`: Bash shell code to demonstrate how to calculate geometric eigenmodes
-6. `demo_eigenmode_analysis.m`: MATLAB code to demonstrate how to calculate use eigenmodes to analyze fMRI data
-7. `demo_eigenmode_visualization.m`: MATLAB code to demonstrate how to visualize eigenmodes
+6. `demo_eigenmode_analysis.m`: MATLAB code to demonstrate how to use eigenmodes to analyze fMRI data
+7. `demo_eigenmode_visualization.m`: MATLAB code to demonstrate how to visualize surface and volume eigenmodes
 8. `demo_connectome_eigenmode_calculation.m`: MATLAB code to demonstrate how to calculate connectome and EDR connectome eigenmodes
 
 ## Installation
