@@ -13,6 +13,16 @@
 ### Original: James Pang, Monash University, 2022
 ################################################################################################################################
 
+
+### REMINDER:
+# If using an HPC system, load the gmsh, python, freesurfer, and connectome workbench modules first
+# An example syntax is shown below (syntax depends on your HPC system)
+# module load gmsh
+# module load anaconda/2019.03-Python3.7-gcc5
+# module load freesurfer
+# module load connectome
+
+
 ################################################################################################################################
 ### EXAMPLE 1
 ### Calcute 200 surface eigenmodes of the left and right fsLR_32k template midthickness surface with and without a mask, 
