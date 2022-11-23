@@ -7,7 +7,7 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 
 ## File descriptions
 
-1. `data`: folder containing example data, parcellations, data results from the paper, template eigenmodes, and template surfaces and volumes
+1. `data`: folder containing example data, parcellations, results from the paper, template eigenmodes, and template surfaces and volumes
 2. `functions_matlab`: folder containing various utility analysis and visualization MATLAB functions
 3. `surface_eigenmodes.py`: Python code to calculate geometric eigenmodes of a cortical surface
 4. `volume_eigenmodes.py`: Python code to calculate geometric eigenmodes of a 3D volume
@@ -19,13 +19,13 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 ## Installation
 
 Download the repository and you're good to go.
-Read the comments and documentation within each code to guide you in your usage.
+Read the comments and documentation within each code for usage guidance.
 
 ## Downloading data
 
-Due to their file sizes exceeding the limit allowed in GitHub, you will need to fill the `data/examples`, `data/results`, and `data/template_eigenmodes` directories with some data that you can downloaded from this Zenodo repository (LINK TO BE UPDATED).
+Due to their file sizes exceeding the limit allowed by GitHub, you will need to fill the `data/results` and `data/template_eigenmodes` directories with some data that you can downloaded from this Zenodo repository (LINK TO BE UPDATED).
 
-All empirical data are from the [Human Connectome Project](https://db.humanconnectome.org/). Please consult the link for detailed information about access and licensing.
+All empirical data are from the [Human Connectome Project](https://db.humanconnectome.org/). Please consult the link for detailed information about access, licensing, and terms and conditions of usage.
 
 ## Dependencies
 
@@ -45,7 +45,7 @@ Some important aspects you need to do before running the MATLAB-based scripts
 
 ## Compatibility
 
-The codes have been tested on versions of Python 3.8 and MATLAB from R2019b to R2020b.
+The codes have been tested on Python 3.8 and versions of MATLAB from R2019b to R2020b.
 
 ## Citation
 
