@@ -45,7 +45,7 @@ Some important aspects you need to do before running the MATLAB-based scripts
 
 ## Compatibility
 
-The codes have been tested on Python 3.8 and versions of MATLAB from R2019b to R2020b.
+The codes have been tested on versions of Python from 3.7 to 3.8 and versions of MATLAB from R2019b to R2020b.
 
 ## Citation
 
