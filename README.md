@@ -35,6 +35,7 @@ Some important aspects you need to do before running `demo_eigenmode_calculation
 2. Install [Connectome Workbench](https://www.humanconnectome.org/software/get-connectome-workbench) and load module (only for HPC systems).
 3. Install [Gmsh](https://gmsh.info/) and load module (only for HPC systems).
 4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
+5. Make sure you also have the following common Python libraries: numpy, scipy, os, argparse, subprocess
 
 Some important aspects you need to do before running the MATLAB-based scripts
 
