@@ -46,7 +46,7 @@ num_modes=200
 save_cut=0
 
 for hemisphere in ${hemispheres}; do
-	echo 'Processing ${hemisphere}'
+	echo Processing ${hemisphere}
 
 	surface_input_filename=data/template_surfaces_volumes/${surface_interest}_${structure}-${hemisphere}.vtk
     mask_input_filename=data/template_surfaces_volumes/${surface_interest}_cortex-${hemisphere}_mask.txt
@@ -54,8 +54,8 @@ for hemisphere in ${hemispheres}; do
 	# with cortex mask (remove medial wall)
     # this is the advisable way
 	is_mask=1
-    output_eval_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}2.txt
-    output_emode_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}2.txt
+    output_eval_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}.txt
+    output_emode_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}.txt
 
     python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
@@ -64,8 +64,8 @@ for hemisphere in ${hemispheres}; do
 
     # without cortex mask
     is_mask=0
-    output_eval_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}2.txt
-    output_emode_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}2.txt
+    output_eval_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}.txt
+    output_emode_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}.txt
 
     python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
@@ -91,12 +91,12 @@ normalization_type='none'
 normalization_factor=1
 
 for hemisphere in ${hemispheres}; do
-    echo 'Processing ${hemisphere}'
+    echo Processing ${hemisphere}
 
     nifti_input_filename=data/template_surfaces_volumes/hcp_${structure}-${hemisphere}_thr25.nii.gz
-    nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}2.nii.gz
-    output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${num_modes}2.txt
-    output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}2.txt
+    nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.nii.gz
+    output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${num_modes}.txt
+    output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.txt
     
     python volume_eigenmodes.py ${nifti_input_filename} ${nifti_output_filename} \
                                 ${output_eval_filename} ${output_emode_filename} \
