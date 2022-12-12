@@ -182,28 +182,31 @@ def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename,
 def main(raw_args=None):    
     parser = ArgumentParser(epilog="surface_eigenmodes.py -- A function to calculate the eigenmodes of a cortical surface. James Pang, Monash University, 2022 <james.pang1@monash.edu>")
     parser.add_argument("surface_input_filename", help="An input surface in vtk format", metavar="surface_input.vtk")
-    parser.add_argument("mask_input_filename", help="An input mask text or gifti file", metavar="mask.txt")
     parser.add_argument("output_eval_filename", help="An output text file where the eigenvalues will be stored", metavar="evals.txt")
     parser.add_argument("output_emode_filename", help="An output text file where the eigenmodes will be stored", metavar="emodes.txt")
     parser.add_argument("-save_cut", dest="save_cut", default=0, help="Logical value to decide whether to write the masked version of the input surface", metavar="0")
     parser.add_argument("-N", dest="num_modes", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
     parser.add_argument("-is_mask", dest="is_mask", default=1, help="Logical value to decide whether to apply the mask", metavar="1")
-
+    parser.add_argument("-mask", dest="mask_input_filename", help="An input mask text or gifti file", metavar="mask.txt")
+    
     #--------------------    Parsing the inputs from terminal:   -------------------
     args = parser.parse_args()
     surface_input_filename   = args.surface_input_filename
-    mask_input_filename      = args.mask_input_filename
     output_eval_filename     = args.output_eval_filename
     output_emode_filename    = args.output_emode_filename
     save_cut                 = int(args.save_cut)
-    num_modes        = int(args.num_modes)
+    num_modes                = int(args.num_modes)
     is_mask                  = int(args.is_mask)
+    mask_input_filename      = args.mask_input_filename
     #-------------------------------------------------------------------------------
-   
-    if is_mask == 1:
-        calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes)
-    else:
+
+    if is_mask == 0:
         calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes)
+    else:
+        if mask_input_filename == None:
+            print('ERROR: You need to provide a mask file')
+        else:
+            calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes)
     
    
 if __name__ == '__main__':

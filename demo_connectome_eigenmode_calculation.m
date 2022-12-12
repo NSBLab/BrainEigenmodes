@@ -69,6 +69,7 @@ connectome = zeros(size(surface_connectivity));
 
 % Generate pseudorandom integers from imin to imax for the upper
 % triangle elements of the connectome
+% random number is set for now for reproducibility
 rng(1)
 imin = 0;
 imax = 1e4;
@@ -154,6 +155,7 @@ surface_dist = squareform(pdist(surface_to_analyze.vertices(cortex_ind,:)));
 Pspace_func = @(scale, distance) exp(-scale*distance);
 
 % Generate pseudorandom numbers to compare with probability function
+% random number is set for now for reproducibility
 rng(1)
 rand_prob = rand(size(surface_dist));
 rand_prob = triu(rand_prob,1) + triu(rand_prob,1)';

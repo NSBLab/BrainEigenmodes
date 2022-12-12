@@ -64,7 +64,7 @@ def make_tetra_file(nifti_input_filename):
     nifti_input_file_head, nifti_input_file_tail = os.path.split(nifti_input_filename)
     nifti_input_file_main, nifti_input_file_ext = os.path.splitext(nifti_input_file_tail)
 
-    os.system('mri_mc ' + nifti_input_filename + ' 1 rh.tmp_surface.vtk')
+    os.system('mri_mc ' + nifti_input_filename + ' 1 ' + nifti_input_file_head + '/rh.tmp_surface.vtk')
     os.system('mv -f ' + nifti_input_file_head + '/rh.tmp_surface.vtk ' + nifti_input_filename + '.vtk')
 
     geo_file = nifti_input_filename + '.geo'
@@ -341,7 +341,7 @@ def main(raw_args=None):
     nifti_output_filename   = args.nifti_output_filename
     output_eval_filename    = args.output_eval_filename
     output_emode_filename   = args.output_emode_filename
-    num_modes       = int(args.num_modes)
+    num_modes               = int(args.num_modes)
     normalization_type      = args.normalization_type
     normalization_factor    = float(args.normalization_factor)
     #-------------------------------------------------------------------------------

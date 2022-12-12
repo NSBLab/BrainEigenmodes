@@ -49,17 +49,18 @@ for hemisphere in ${hemispheres}; do
 	echo Processing ${hemisphere}
 
 	surface_input_filename=data/template_surfaces_volumes/${surface_interest}_${structure}-${hemisphere}.vtk
-    mask_input_filename=data/template_surfaces_volumes/${surface_interest}_cortex-${hemisphere}_mask.txt
 
 	# with cortex mask (remove medial wall)
     # this is the advisable way
 	is_mask=1
     output_eval_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}.txt
     output_emode_filename=data/template_eigenmodes/${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}.txt
+    mask_input_filename=data/template_surfaces_volumes/${surface_interest}_cortex-${hemisphere}_mask.txt
 
-    python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
+    python surface_eigenmodes.py ${surface_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
-    							 -save_cut ${save_cut} -N ${num_modes} -is_mask ${is_mask}
+    							 -save_cut ${save_cut} -N ${num_modes} -is_mask ${is_mask} \
+                                 -mask ${mask_input_filename}
                 
 
     # without cortex mask
@@ -67,7 +68,7 @@ for hemisphere in ${hemispheres}; do
     output_eval_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_eval_${num_modes}.txt
     output_emode_filename=data/template_eigenmodes/no_mask_${surface_interest}_${structure}-${hemisphere}_emode_${num_modes}.txt
 
-    python surface_eigenmodes.py ${surface_input_filename} ${mask_input_filename} \
+    python surface_eigenmodes.py ${surface_input_filename} \
     							 ${output_eval_filename} ${output_emode_filename} \
     							 -save_cut ${save_cut} -N ${num_modes} -is_mask ${is_mask}
 done
