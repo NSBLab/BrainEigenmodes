@@ -15,6 +15,7 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 6. `demo_eigenmode_analysis.m`: MATLAB code to demonstrate how to use eigenmodes to analyze fMRI data
 7. `demo_eigenmode_visualization.m`: MATLAB code to demonstrate how to visualize surface and volume eigenmodes
 8. `demo_connectome_eigenmode_calculation.m`: MATLAB code to demonstrate how to calculate connectome and EDR connectome eigenmodes
+9. `demo_wave_model_simulation.m`: MATLAB code to demonstrate how to simulate waves on a cortical surface using eigenmodes
 
 ## Installation
 
