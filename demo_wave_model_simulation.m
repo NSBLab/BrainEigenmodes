@@ -52,22 +52,33 @@ eigenvalues = dlmread(sprintf('data/examples/fsLR_32k_midthickness-%s_eval_%i.tx
 %         Simulate resting-state activity using Gaussian white noise       
 % =========================================================================
 
-tmax = 100; % in ms
-dt = 0.1; % in ms
-tspan = 0:dt:tmax;
-Nt = length(tspan);
-method = 'ODE';
+param = loadParameters_wave_func;
+param.tstep = 0.1; % in ms
+param.tmax = 100;  % in ms
+param.tspan = [0, param.tmax];
+param.T = 0:param.tstep:param.tmax;
 
-params = struct();
-params.r_s = 30; % in mm
-params.gamma_s = 116*1e-3; % in ms^-1
+% Change value of param.is_time_ms to 1 because the time defined above is
+% in ms. This is necessary as param.gamma_s needs to match the scale.
+param.is_time_ms = 1;
+
+% Method for solving the wave model (either 'ODE' or 'Fourier')
+% 'Fourier' is faster for long time series
+method = 'ODE';
+% method = 'Fourier';
+
+param.r_s = 30;      % (default) in mm
+param.gamma_s = 116; % (default) in s^-1
+if param.is_time_ms==1
+    param.gamma_s = 116*1e-3;
+end
 
 % Create Gaussian white noise external input
 % random number is set for now for reproducibility
 rng(1)
-ext_input = randn(size(eigenmodes,1), Nt);
+ext_input = randn(size(eigenmodes,1), length(param.T));
 
-simulated_activity_rest = model_neural_waves(eigenmodes, eigenvalues, ext_input, tspan, method, params);
+simulated_activity_rest = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
 
 % =========================================================================
 %                      Some visualizations of results                      
@@ -75,7 +86,7 @@ simulated_activity_rest = model_neural_waves(eigenmodes, eigenvalues, ext_input,
 
 % Snapshot of activity snapshot every 10 ms
 t_interest = [0:10:100];
-t_interest_ind = dsearchn(tspan', t_interest');
+t_interest_ind = dsearchn(param.T', t_interest');
 surface_to_plot = surface_midthickness;
 data_to_plot = simulated_activity_rest(:, t_interest_ind);
 medial_wall = find(cortex==0);
@@ -88,14 +99,15 @@ colormap(fig, parula)
 % Video of activity every 0.5 ms (increase this to better see the waves)
 surface_to_plot = surface_midthickness;
 data_to_plot = simulated_activity_rest;
-t = tspan;
+t = param.T;
 t_interest = [0:0.5:100];
+is_time_ms = 1;
 medial_wall = find(cortex==0);
 cmap = parula;
 output_filename = 'rest_waves';
 save_video = 0;
 
-fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, medial_wall, cmap, output_filename, save_video);
+fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, is_time_ms, medial_wall, cmap, output_filename, save_video);
 
 %% Simulate evoked activity (stimulating V1)
 
@@ -141,26 +153,37 @@ parcel_ind = find(parc.cdata==parcel_number);
 %      Simulate evoked activity stimulating all vertices within V1 ROI     
 % =========================================================================
 
-tmax = 100; % in ms
-dt = 0.1; % in ms
-tspan = 0:dt:tmax;
-Nt = length(tspan);
-method = 'ODE';
+param = loadParameters_wave_func;
+param.tstep = 0.1; % in ms
+param.tmax = 100;  % in ms
+param.tspan = [0, param.tmax];
+param.T = 0:param.tstep:param.tmax;
 
-params = struct();
-params.r_s = 30; % in mm
-params.gamma_s = 116*1e-3; % in ms^-1
+% Change value of param.is_time_ms to 1 because the time defined above is
+% in ms. This is necessary as param.gamma_s needs to match the scale.
+param.is_time_ms = 1;
+
+% Method for solving the wave model (either 'ODE' or 'Fourier')
+% 'Fourier' is faster for long time series
+method = 'ODE';
+% method = 'Fourier';
+
+param.r_s = 30;      % (default) in mm
+param.gamma_s = 116; % (default) in s^-1
+if param.is_time_ms==1
+    param.gamma_s = 116*1e-3;
+end
 
 % Create a 10 ms external input with amplitude = 20 to V1 ROI
 % results are robust to amplitude
 ext_input_time_range = [10, 20];
-ext_input_time_range_ind = dsearchn(tspan', ext_input_time_range');
+ext_input_time_range_ind = dsearchn(param.T', ext_input_time_range');
 ext_input_amplitude = 20; 
 
-ext_input = zeros(size(eigenmodes,1), Nt);
+ext_input = zeros(size(eigenmodes,1), length(param.T));
 ext_input(parcel_ind, ext_input_time_range_ind(1):ext_input_time_range_ind(2)) = ext_input_amplitude; 
 
-simulated_activity_evoke = model_neural_waves(eigenmodes, eigenvalues, ext_input, tspan, method, params);
+simulated_activity_evoke = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
 
 % =========================================================================
 %                      Some visualizations of results                      
@@ -168,9 +191,9 @@ simulated_activity_evoke = model_neural_waves(eigenmodes, eigenvalues, ext_input
 
 % Snapshot of activity snapshot every 10 ms
 t_interest = [10:10:100];
-t_interest_ind = dsearchn(tspan', t_interest');
+t_interest_ind = dsearchn(param.T', t_interest');
 surface_to_plot = surface_midthickness;
-data_to_plot = simulated_activity_evoke2(:, t_interest_ind);
+data_to_plot = simulated_activity_evoke(:, t_interest_ind);
 medial_wall = find(cortex==0);
 with_medial = 0;
 
@@ -180,12 +203,13 @@ colormap(fig, parula)
 
 % Video of activity every 0.5 ms (increase this to better see the waves)
 surface_to_plot = surface_midthickness;
-data_to_plot = simulated_activity_evoke2;
-t = tspan;
+data_to_plot = simulated_activity_evoke;
+t = param.T;
 t_interest = [10:0.5:100];
+is_time_ms = 1;
 medial_wall = find(cortex==0);
 cmap = parula;
 output_filename = 'evoke_waves';
 save_video = 0;
 
-fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, medial_wall, cmap, output_filename, save_video);
+fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, is_time_ms, medial_wall, cmap, output_filename, save_video);

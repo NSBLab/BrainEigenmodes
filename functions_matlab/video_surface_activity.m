@@ -1,4 +1,4 @@
-function fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, medial_wall, cmap, output_filename, save_video)
+function fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, is_time_ms, medial_wall, cmap, output_filename, save_video)
 % video_surface_activity.m
 %
 % Draw and save (optional) video of activity data on surface
@@ -13,6 +13,9 @@ function fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere,
 %                           rh - right hemisphere
 %         t               : time vector [1xT]
 %         t_interest      : time snapshots vector [1xTs]
+%         is_time_ms      : is time vector in ms? (boolean)
+%                           1 = if time is in ms
+%                           0 = if time is in s
 %         medial_wall     : indices of the medial wall (vector)
 %         cmap            : colormap [mx3]
 %                           m - number of colors
@@ -24,15 +27,15 @@ function fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere,
 % Original: James Pang, Monash University, 2022
 
 %%
-if nargin<8
+if nargin<9
     save_video = 0;
 end
 
-if nargin<7
+if nargin<8
     output_filename = 'waves';
 end
 
-if nargin<6
+if nargin<7
     cmap = bluewhitered;
 end
 
@@ -41,6 +44,12 @@ if size(t,2)~=1
 end
 if size(t_interest,2)~=1
     t_interest = t_interest';
+end
+
+if is_time_ms==1
+    time_units = 'ms';
+else
+    time_units = 's';
 end
 
 t_interest_ind = dsearchn(t, t_interest);
@@ -87,7 +96,7 @@ material dull
 colormap(ax1,[0.5 0.5 0.5; cmap])
 axis off
 axis image
-title1 = title(sprintf('t = %.1f ms', t_interest(t_ind)), 'fontsize', 12, 'fontweight', 'normal');
+title1 = title(sprintf('t = %.2f %s', t_interest(t_ind), time_units), 'fontsize', 12, 'fontweight', 'normal');
 
 ax2 = axes('Position', [init_x init_y+factor_y*length_y*(1-1) length_x length_y]);
 obj2 = patch(ax2, 'Vertices', surface_to_plot.vertices, 'Faces', surface_to_plot.faces, 'FaceVertexCData', data_to_plot(:,t_ind), ...
@@ -126,7 +135,7 @@ for t_ind = 1:length(t_interest)
     set(obj2, 'FaceVertexCData', data_to_plot(:,t_ind))
     set(ax1, 'CLim', clims, 'Colormap', [0.5 0.5 0.5; cmap])
     set(ax2, 'CLim', clims, 'Colormap', [0.5 0.5 0.5; cmap])
-    set(title1, 'String', sprintf('t = %.1f ms', t_interest(t_ind)))
+    set(title1, 'String', sprintf('t = %.2f %s', t_interest(t_ind), time_units))
     
     if save_video
         writeVideo(writerObj, getframe(fig));
