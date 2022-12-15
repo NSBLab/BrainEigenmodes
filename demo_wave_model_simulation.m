@@ -65,7 +65,7 @@ params.gamma_s = 116*1e-3; % in ms^-1
 % Create Gaussian white noise external input
 % random number is set for now for reproducibility
 rng(1)
-ext_input = randn(size(eig_vec,1), Nt);
+ext_input = randn(size(eigenmodes,1), Nt);
 
 simulated_activity_rest = model_neural_waves(eigenmodes, eigenvalues, ext_input, tspan, method, params);
 
@@ -157,7 +157,7 @@ ext_input_time_range = [10, 20];
 ext_input_time_range_ind = dsearchn(tspan', ext_input_time_range');
 ext_input_amplitude = 20; 
 
-ext_input = zeros(size(eig_vec,1), Nt);
+ext_input = zeros(size(eigenmodes,1), Nt);
 ext_input(parcel_ind, ext_input_time_range_ind(1):ext_input_time_range_ind(2)) = ext_input_amplitude; 
 
 simulated_activity_evoke = model_neural_waves(eigenmodes, eigenvalues, ext_input, tspan, method, params);
