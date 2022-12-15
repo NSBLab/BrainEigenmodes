@@ -39,7 +39,7 @@ function param = loadParameters_wave_func
     %                     DEPENDENT PARAMETERS
     % ===================================================================== 
         
-    param.tspan = [0, param.tmax];
-    param.T = 0:param.tstep:param.tmax;
+    param.tspan    = [0, param.tmax];             % time period limits
+    param.T        = 0:param.tstep:param.tmax;    % time vector
     
 end

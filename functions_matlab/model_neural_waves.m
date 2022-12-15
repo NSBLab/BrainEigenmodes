@@ -1,22 +1,23 @@
-function sim_activity = model_neural_waves(eig_vec, eig_val, ext_input, param, method)
+function [mode_activity, sim_activity] = model_neural_waves(eig_vec, eig_val, ext_input, param, method)
 % model_neural_waves.m
 %
 % Simulate neural waves on a surface using eigenmodes.
 %
-% Inputs: eig_vec      : eigenvectors (eigenmodes) [V x num_modes]
-%                        V = number of vertices
-%                        num_modes = number of modes
-%         eig_val      : eigenvalues [num_modes x 1]
-%         ext_input    : spatiotemporal external input [V x T]
-%                        T = number of time points
-%         param        : model parameters (struct)
-%                        Create instance using loadParameters_wave_func.m
-%         method       : method for calculating the activity (string)
-%                        ODE = via solving ODEs
-%                        Fourier = via solving Fourier transform
+% Inputs: eig_vec       : eigenvectors (eigenmodes) [V x num_modes]
+%                         V = number of vertices
+%                         num_modes = number of modes
+%         eig_val       : eigenvalues [num_modes x 1]
+%         ext_input     : spatiotemporal external input [V x T]
+%                         T = number of time points
+%         param         : model parameters (struct)
+%                         Create instance using loadParameters_wave_func.m
+%         method        : method for calculating the activity (string)
+%                         ODE = via solving ODEs
+%                         Fourier = via solving Fourier transform
 %
-% Output: sim_activity : simulated wave activity [V x T]
-%
+% Outputs: mode_activity : simulated mode activity [num_modes x T]
+%          sim_activity  : simulated wave activity [V x T]
+%          
 % Original: James Pang, Monash University, 2022
 
 %%
@@ -24,10 +25,6 @@ function sim_activity = model_neural_waves(eig_vec, eig_val, ext_input, param, m
 if nargin<5
     method = 'ODE';
 end
-
-% if time is in ms, param.gamma_s must be in ms^-1
-% hence uncomment below to rescale to ms^-1
-% param.gamma_s = param.gamma_s*1e-3; 
 
 num_modes = size(eig_vec,2);
 
@@ -78,8 +75,11 @@ switch method
         sim_activity = sim_activity(:,t0_ind:end);
 end
 
+mode_activity = sim_activity;
+
 % combine mode time series with mode spatial map
 sim_activity = eig_vec*sim_activity;
+
 
 end
 
@@ -126,7 +126,6 @@ function out = wave_Fourier(mode_coeff, lambda, T, param)
 Nt = length(T);
 Nw = Nt;
 wsamp = 1/mean(param.tstep)*2*pi;
-wMat = (-1).^(1:Nw);
 jvec = 0:Nw-1;
 w = (wsamp)*1/Nw*(jvec - Nw/2);
 

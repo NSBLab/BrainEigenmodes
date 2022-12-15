@@ -78,7 +78,7 @@ end
 rng(1)
 ext_input = randn(size(eigenmodes,1), length(param.T));
 
-simulated_activity_rest = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
+[mode_activity_rest, simulated_activity_rest] = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
 
 % =========================================================================
 %                      Some visualizations of results                      
@@ -183,7 +183,7 @@ ext_input_amplitude = 20;
 ext_input = zeros(size(eigenmodes,1), length(param.T));
 ext_input(parcel_ind, ext_input_time_range_ind(1):ext_input_time_range_ind(2)) = ext_input_amplitude; 
 
-simulated_activity_evoke = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
+[mode_activity_evoke, simulated_activity_evoke] = model_neural_waves(eigenmodes, eigenvalues, ext_input, param, method);
 
 % =========================================================================
 %                      Some visualizations of results                      
