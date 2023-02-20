@@ -1,5 +1,5 @@
 # BrainEigenmodes
-Code and data for the manuscript "[Geometric constraints on human brain function](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v1)"
+Code and data for the manuscript "[Geometric constraints on human brain function](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v2)"
 
 Uses an eigenmode-based analysis to study how the geometric structure of the brain constrains function captured by fMRI
 
