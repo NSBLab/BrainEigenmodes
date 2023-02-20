@@ -74,32 +74,32 @@ for hemisphere in ${hemispheres}; do
 done
 
 
-################################################################################################################################
-### EXAMPLE 2
-### Calcute 31 volume eigenmodes of the thalamus (tha), the mask of which came from the Harvard-Oxford 2mm resolution atlas with 
-### 25% probability threshold registered on HCP data
-###
-### Input needed: (1) volume mask of the thalamus in nifti format
-###
-### NOTE 1: Subcortical volume masks for striatum (striatum) and hippocampus (hippo) are also provided in 
-###         data/template_surface_volumes for you to use. Just change the structure variable below.
-################################################################################################################################
+# ################################################################################################################################
+# ### EXAMPLE 2
+# ### Calcute 31 volume eigenmodes of the thalamus (tha), the mask of which came from the Harvard-Oxford 2mm resolution atlas with 
+# ### 25% probability threshold registered on HCP data
+# ###
+# ### Input needed: (1) volume mask of the thalamus in nifti format
+# ###
+# ### NOTE 1: Subcortical volume masks for striatum (striatum) and hippocampus (hippo) are also provided in 
+# ###         data/template_surface_volumes for you to use. Just change the structure variable below.
+# ################################################################################################################################
 
-structure='tha'
-hemispheres='lh rh'
-num_modes=31
-normalization_type='none'
-normalization_factor=1
+# structure='tha'
+# hemispheres='lh rh'
+# num_modes=31
+# normalization_type='none'
+# normalization_factor=1
 
-for hemisphere in ${hemispheres}; do
-    echo Processing ${hemisphere}
+# for hemisphere in ${hemispheres}; do
+#     echo Processing ${hemisphere}
 
-    nifti_input_filename=data/template_surfaces_volumes/hcp_${structure}-${hemisphere}_thr25.nii.gz
-    nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.nii.gz
-    output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${num_modes}.txt
-    output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.txt
+#     nifti_input_filename=data/template_surfaces_volumes/hcp_${structure}-${hemisphere}_thr25.nii.gz
+#     nifti_output_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.nii.gz
+#     output_eval_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_eval_${num_modes}.txt
+#     output_emode_filename=data/template_eigenmodes/hcp_${structure}-${hemisphere}_emode_${num_modes}.txt
     
-    python volume_eigenmodes.py ${nifti_input_filename} ${nifti_output_filename} \
-                                ${output_eval_filename} ${output_emode_filename} \
-                                -N ${num_modes} -norm ${normalization_type} -normfactor ${normalization_factor}
-done
+#     python volume_eigenmodes.py ${nifti_input_filename} ${nifti_output_filename} \
+#                                 ${output_eval_filename} ${output_emode_filename} \
+#                                 -N ${num_modes} -norm ${normalization_type} -normfactor ${normalization_factor}
+# done
