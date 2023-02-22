@@ -7,15 +7,17 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 
 ## File descriptions
 
-1. `data`: folder containing example data, parcellations, results from the paper, template eigenmodes, and template surfaces and volumes
+1. `data`: folder containing example data, parcellations, empirical data, results from the paper, figure source data, template eigenmodes, and template surfaces and volumes
 2. `functions_matlab`: folder containing various utility analysis and visualization MATLAB functions
-3. `surface_eigenmodes.py`: Python code to calculate geometric eigenmodes of a cortical surface
-4. `volume_eigenmodes.py`: Python code to calculate geometric eigenmodes of a 3D volume
-5. `demo_eigenmode_calculation.sh`: Bash shell code to demonstrate how to calculate geometric eigenmodes
-6. `demo_eigenmode_analysis.m`: MATLAB code to demonstrate how to use eigenmodes to analyze fMRI data
-7. `demo_eigenmode_visualization.m`: MATLAB code to demonstrate how to visualize surface and volume eigenmodes
-8. `demo_connectome_eigenmode_calculation.m`: MATLAB code to demonstrate how to calculate connectome and EDR connectome eigenmodes
-9. `demo_wave_model_simulation.m`: MATLAB code to demonstrate how to simulate waves on a cortical surface using eigenmodes
+3. `surface_eigenmodes.py`: Python script to calculate geometric eigenmodes of a cortical surface
+4. `volume_eigenmodes.py`: Python script to calculate geometric eigenmodes of a 3D volume
+5. `demo_eigenmode_calculation.sh`: Bash shell script to demonstrate how to calculate geometric eigenmodes
+6. `demo_eigenmode_analysis.m`: MATLAB script to demonstrate how to use eigenmodes to analyze fMRI data
+7. `demo_eigenmode_visualization.m`: MATLAB script to demonstrate how to visualize surface and volume eigenmodes
+8. `demo_connectome_eigenmode_calculation.m`: MATLAB script to demonstrate how to calculate connectome and EDR connectome eigenmodes
+9. `demo_wave_model_simulation.m`: MATLAB script to demonstrate how to simulate waves on a cortical surface using eigenmodes
+10. `generate_paper_figures.m`: MATLAB script to generate the main figures of the paper
+11. `generate_paper_suppfigures.m`: MATLAB script to generate the supplementary figures of the paper
 
 ## Installation
 
