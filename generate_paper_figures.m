@@ -1170,9 +1170,6 @@ annotation(fig, 'textbox', [0.015, 0.6, 0.01, 0.01], 'string', 'B', 'edgecolor',
 
 %% FIGURE 4
 
-% load all data relevant to Figure 4
-% data_Figure4 = load(sprintf('%s/Figure4.mat', data_figures_folder));
-
 surface_to_plot = surface_midthickness;
 
 parc_name = 'Glasser360';
