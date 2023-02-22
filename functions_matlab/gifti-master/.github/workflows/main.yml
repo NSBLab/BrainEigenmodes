@@ -1,0 +1,19 @@
+name: Build and Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install GNU Octave
+      run: |
+        sudo apt-get install octave liboctave-dev
+        octave --version
+    - name: Compile GIfTI MEX files
+      run: make -C @gifti/private PLATFORM=octave
+    - name: Install GIfTI library in GNU Octave
+      run: octave --no-gui --no-window-system --silent --eval "addpath (pwd); savepath ();"
+    - name: Run tests
+      run: octave --no-gui --no-window-system --silent --eval "cd tests; results = gifti_runtests; assert(all(~[results.Failed]))"
