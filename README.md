@@ -38,12 +38,13 @@ Some important aspects you need to do before running `demo_eigenmode_calculation
 4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
 5. Make sure you also have the following common Python libraries: numpy, scipy, os, argparse, subprocess
 
-Some important aspects you need to do before running the MATLAB-based scripts
+Some of the MATLAB-based scripts depend on packages developed by others. Copies of these packages have been stored in the `functions_matlab` folder to ensure version compatibility. However, please visit their respective links below to get more details and don't forget to give them some love.
 
-1. Download the [gifti](https://github.com/gllmflndn/gifti) library and add to Matlab path.
-2. Download the [cifti](https://github.com/Washington-University/cifti-matlab) library and add to Matlab path.
-3. Download [cbrewer2](https://au.mathworks.com/matlabcentral/fileexchange/58350-cbrewer2?s_tid=srchtitle) and add to Matlab path.
-4. Download Stuart Oldham's [repository](https://github.com/StuartJO/plotSurfaceROIBoundary) for drawing ROI boundaries on a surface and add to Matlab path. 
+1. [gifti](https://github.com/gllmflndn/gifti)
+2. [cifti](https://github.com/Washington-University/cifti-matlab)
+3. [cbrewer](https://au.mathworks.com/matlabcentral/fileexchange/58350-cbrewer2?s_tid=srchtitle) (NOTE: The link is for the new version cbrewer2, but the repo uses the older version.) 
+4. Stuart Oldham's [repository](https://github.com/StuartJO/plotSurfaceROIBoundary) for drawing ROI boundaries on a surface
+5. Frantisek Vasa's [repository](https://github.com/frantisekvasa/rotate_parcellation) for creating rotations of a parcellated map
 
 ## Compatibility
 
