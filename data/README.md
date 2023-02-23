@@ -2,9 +2,13 @@ Data to perform demos provided, reproduce the figures of the paper, and perform 
 
 ## File descriptions
 
+# Pre-filled folders
 1. `examples`: folder containing example data such as geometric, connectome, and EDR connectome eigenmodes, single-subject tfMRI and rfMRI, and neurovault maps
 2. `figures`: folder containing source data to reproduce the figures of the paper
 3. `parcellations`: folder containing cortical parcellations of various resolutions
-4. `results`: folder containing data for the main results of the paper
-5. `template_eigenmodes`: folder containing template surface and volume geometric eigenmodes
-6. `template_surfaces_volumes`: folder containing template cortical surfaces and subcortical volume masks
+4. `template_surfaces_volumes`: folder containing template cortical surfaces and subcortical volume masks
+
+# Empty folders
+1. `empirical`: folder for empirical data
+2. `results`: folder for generated data related to the main results of the paper
+3. `template_eigenmodes`: folder for template surface and volume geometric eigenmodes
