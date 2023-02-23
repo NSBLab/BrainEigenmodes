@@ -11,13 +11,13 @@
 %%% Original: James Pang, Monash University, 2022
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% LOAD REPO MATLAB FUNCTIONS
+%% Load relevant repository MATLAB functions
 
-addpath(genpath('functions_matlab'))
+addpath(genpath('functions_matlab'));
 
 %% MISCELLANEOUS VARIABLES
 
-% NOTE: data provided is only for the below parameters, so don't change them
+% NOTE: data provided is only for the below parameters, so please don't change them
 hemisphere = 'lh'; 
 num_modes = 200;
 parc_name = 'Glasser360';
@@ -111,18 +111,12 @@ load(sprintf('%s/task_reconstruction_corr_remove_lowf_modes=%i_%s_%s.mat', data_
 load(sprintf('%s/task_reconstruction_corr_remove_highf_modes=%i_%s_%s.mat', data_results_folder, num_modes, parc_name, hemisphere), ...
              'task_recon_corr_remove_highf_geometric', 'task_recon_corr_remove_highf_connectome', ...
              'task_recon_corr_remove_highf_connectome_density_matched', 'task_recon_corr_remove_highf_EDR')  
-% individual surfaces
-load(sprintf('%s/task_reconstruction_corr_individual_modes=%i_%s_%s.mat', data_results_folder, num_modes, parc_name, hemisphere), ...
-             'task_recon_corr_individual_geometric')
 
 % RESULTS: resting recon accuracy
 % eigenmodes
 load(sprintf('%s/resting_reconstruction_corr_modes=%i_%s_%s.mat', data_results_folder, num_modes, parc_name, hemisphere), ...
              'resting_recon_corr_geometric', 'resting_recon_corr_connectome', ...
              'resting_recon_corr_connectome_density_matched', 'resting_recon_corr_EDR')
-% individual surfaces
-load(sprintf('%s/resting_reconstruction_corr_individual_modes=%i_%s_%s.mat', data_results_folder, num_modes, parc_name, hemisphere), ...
-             'resting_recon_corr_individual_geometric')
 
 % RESULTS: power spectrum (HCP, NeuroVault, noise)
 load(sprintf('%s/spectrum_modes=%i_%s.mat', data_results_folder, num_modes, hemisphere), ...
