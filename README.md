@@ -10,8 +10,8 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 
 ## File descriptions
 
-1. `data`: folder containing example data, parcellations, empirical data, results from the paper, figure source data, template eigenmodes, and template surfaces and volumes
-2. `functions_matlab`: folder containing various utility analysis and visualization MATLAB functions
+1. `data/`: folder containing example data, parcellations, empirical data, results from the paper, figure source data, template eigenmodes, and template surfaces and volumes
+2. `functions_matlab/`: folder containing various utility analysis and visualization MATLAB functions
 3. `surface_eigenmodes.py`: Python script to calculate geometric eigenmodes of a cortical surface
 4. `volume_eigenmodes.py`: Python script to calculate geometric eigenmodes of a 3D volume
 5. `demo_eigenmode_calculation.sh`: Bash shell script to demonstrate how to calculate geometric eigenmodes
@@ -29,9 +29,9 @@ Read the comments and documentation within each code for usage guidance.
 
 ## Downloading data
 
-Due to their file sizes exceeding the limit allowed by GitHub, you will need to fill the `data/empirical`, `data/results`, and `data/template_eigenmodes` directories with data that you can download from this Zenodo repository (LINK TO BE UPDATED). 
+Due to their file sizes exceeding the limit allowed by GitHub, you will need to fill the `data/empirical/`, `data/results/`, and `data/template_eigenmodes/` directories with data that you can download from this [OSF repository](https://osf.io/xczmp/). 
 
-***VERY IMPORTANT NOTE:*** **Some portions of `generate_paper_figures.m` and `generate_paper_suppfigures.m` require the abovementioned data uploaded in Zenodo. Hence, you need them to be saved in the appropriate folders to be able to run these two scripts smoothly.**
+***VERY IMPORTANT NOTE:*** **Some portions of `generate_paper_figures.m` and `generate_paper_suppfigures.m` require the abovementioned data uploaded in OSF. Hence, you need them to be saved in the appropriate folders to be able to run these two scripts smoothly.**
 
 ## HCP data
 
