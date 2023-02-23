@@ -28,7 +28,7 @@ Read the comments and documentation within each code for usage guidance.
 
 Due to their file sizes exceeding the limit allowed by GitHub, you will need to fill the `data/empirical`, `data/results`, and `data/template_eigenmodes` directories with data that you can download from this Zenodo repository (LINK TO BE UPDATED). 
 
-***MASSIVE NOTE:*** **Some portions of `generate_paper_figures.m` and `generate_paper_suppfigures.m` require the abovementioned data uploaded in Zenodo. Hence, you need them to be saved in the appropriate folders to be able to run these two scripts smoothly.**
+***VERY IMPORTANT NOTE:*** **Some portions of `generate_paper_figures.m` and `generate_paper_suppfigures.m` require the abovementioned data uploaded in Zenodo. Hence, you need them to be saved in the appropriate folders to be able to run these two scripts smoothly.**
 
 ## HCP data
 
