@@ -3,7 +3,7 @@ Code and data for the manuscript "[Geometric constraints on human brain function
 
 Uses an eigenmode-based analysis to study how the geometric structure of the brain constrains function captured by fMRI
 
-The code also serves as a toolbox for people to calculate surface and/or volume geometric eigenmodes using their own data
+The code also serves as a toolbox for people to calculate surface and/or volume geometric eigenmodes using their own data (See `demo_eigenmode_calculation.sh`)
 
 ## File descriptions
 
