@@ -30,6 +30,7 @@ Due to their file sizes exceeding the limit allowed by GitHub, you will need to 
 
 ***MASSIVE NOTE: Some portions of `generate_paper_figures.m` and `generate_paper_suppfigures.m` require the abovementioned data. Hence, you need them to be saved in the appropriate folders to be able to run these two scripts smoothly.***
 
+## HCP data
 
 All empirical data are from the [Human Connectome Project](https://db.humanconnectome.org/). Please consult the link for detailed information about access, licensing, and terms and conditions of usage.
 
