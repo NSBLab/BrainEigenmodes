@@ -205,6 +205,7 @@ colors = [cmap1(4,:); cmap2(3,:); cmap1(6,:); cmap2(1,:); cmap1(3,:); cmap2(7,:)
 colors2 = [0 0 0; cmap1([4,5,1:3,6:7],:)];
 
 % load parcellation
+parc_name = 'Glasser360';
 parc = dlmread(filename_common_parcellation(parc_name, hemisphere));
 num_parcels = length(unique(parc(parc>0)));
 
@@ -410,6 +411,7 @@ for ii=1:3
 end
 
 ax3_3 = axes('Position', [ax3.Position(1)+ax3.Position(3)*(0.62+0.05*(ii-1)) ax3.Position(2)+ax3.Position(4)*(1.4-1) length_x length_y*0.43]);
+parc_name = 'Glasser360';
 parc = dlmread(filename_common_parcellation(parc_name, hemisphere));
 data_parc_emp = calc_parcellate(parc, data_resting);
 data_parc_emp = calc_normalize_timeseries(data_parc_emp');
