@@ -47,7 +47,7 @@ Some important aspects you need to do before running `demo_eigenmode_calculation
 4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
 5. Make sure you also have the following common Python libraries: numpy, scipy, os, argparse, subprocess
 
-Some of the MATLAB-based scripts depend on packages developed by others. Copies of these packages have been stored in the `functions_matlab` folder to ensure version compatibility. However, please visit their respective links below to get more details and don't forget to give them some love.
+Some of the MATLAB-based scripts depend on packages developed by others. Copies of these packages have been stored in the `functions_matlab/` folder to ensure version compatibility. However, please visit their respective links below to get more details and don't forget to give them some love.
 
 1. [gifti](https://github.com/gllmflndn/gifti)
 2. [cifti](https://github.com/Washington-University/cifti-matlab)
