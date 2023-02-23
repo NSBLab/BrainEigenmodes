@@ -107,8 +107,8 @@ V_mask = niftiread(mask_filename);
 % Load volume eigenmodes
 eigenmodes_filename = sprintf('data/examples/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
 
-% Replace above line with the one below if using the modes provided at data/results/subcortical
-% eigenmodes_filename = sprintf('data/results/subcortical/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
+% Replace above line with the one below if using the modes provided at data/results
+% eigenmodes_filename = sprintf('data/results/hcp_%s-%s_emode_30_noconstant_zscore.nii.gz', structure, hemisphere);
 
 V_eigenmodes = niftiread(eigenmodes_filename);
 
