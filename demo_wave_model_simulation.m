@@ -103,11 +103,15 @@ t = param.T;
 t_interest = [0:0.5:100];
 is_time_ms = 1;
 medial_wall = find(cortex==0);
+with_medial = 1;
 cmap = parula;
+show_colorbar = 1;
 output_filename = 'rest_waves';
 save_video = 0;
 
-fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, is_time_ms, medial_wall, cmap, output_filename, save_video);
+fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, ...
+                             t_interest, is_time_ms, medial_wall, with_medial, ...
+                             cmap, show_colorbar, output_filename, save_video);
 
 %% Simulate evoked activity (stimulating V1)
 
@@ -208,8 +212,12 @@ t = param.T;
 t_interest = [10:0.5:100];
 is_time_ms = 1;
 medial_wall = find(cortex==0);
+with_medial = 0;
 cmap = parula;
+show_colorbar = 1;
 output_filename = 'evoke_waves';
 save_video = 0;
 
-fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, t_interest, is_time_ms, medial_wall, cmap, output_filename, save_video);
+fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, ...
+                             t_interest, is_time_ms, medial_wall, with_medial, ...
+                             cmap, show_colorbar, output_filename, save_video);

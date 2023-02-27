@@ -2294,10 +2294,13 @@ t = model_wave_visual.tspan;
 t_interest = 1:0.1:90;
 is_time_ms = 1;
 medial_wall = find(~cortex);
-cmap = [0.5 0.5 0.5; parula];
+with_medial = 1;
+cmap = parula;
+show_colorbar = 1;
 output_filename = 'SuppVideo1';
 save_video = 0;
 
 fig = video_surface_activity(surface_to_plot, data_to_plot, hemisphere, t, ...
-                             t_interest, is_time_ms, medial_wall, cmap, ...
-                             output_filename, save_video);
+                             t_interest, is_time_ms, medial_wall, with_medial, ...
+                             cmap, show_colorbar, output_filename, save_video);
+                          
