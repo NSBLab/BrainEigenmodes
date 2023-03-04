@@ -1,11 +1,12 @@
-function [fig, varargout] = draw_surface_parcellation_dull(surface_to_plot, parc, hemisphere, medial_wall, with_medial, cmap)
-% draw_surface_parcellation_dull.m
+function [fig, varargout] = draw_surface_parcellated_data_dull(surface_to_plot, data_to_plot, parc, hemisphere, medial_wall, with_medial, cmap)
+% draw_surface_parcellated_data_dull.m
 %
-% Draw parcellation on surface using a defined colormap with dull plot lighting
+% Draw parcellated data on surface using a defined colormap with dull plot lighting
 %
 % Inputs: surface_to_plot : surface structure with fields
 %                           vertices - vertex locations [Vx3], V = number of vertices
-%                           faces - which vertices are connected [Fx3], F = number of faces 
+%                           faces - which vertices are connected [Fx3], F = number of faces
+%         data_to_plot    : parcellated data [num_parcelsx1]
 %         parc            : parcellation on surface [Vx1]
 %         hemisphere      : which hemisphere (string)
 %                           lh - left hemisphere
@@ -21,18 +22,18 @@ function [fig, varargout] = draw_surface_parcellation_dull(surface_to_plot, parc
 
 %%
 parc_interest = relabel_parcellation(parc, 1);
-num_parcels = length(unique(parc_interest))-1;
+parcels = unique(parc_interest(parc_interest>0));
+num_parcels = length(parcels);
 
-if nargin<6
-    cmap = cbrewer('qual', 'Paired', num_parcels+2*round(num_parcels/10) , 'pchip');
-    cmap = cmap(1:num_parcels,:);
+if nargin<7
+    cmap = parula;
 end
 
-if nargin<5
+if nargin<6
     with_medial = 0;
 end
 
-if nargin<4
+if nargin<5
     medial_wall = [];
 end
 
@@ -42,12 +43,25 @@ cmap = [0.5 0.5 0.5; cmap];
 % boundary style
 boundary_method = 'midpoint';
 BOUNDARY = findROIboundaries(surface_to_plot.vertices, surface_to_plot.faces, parc_interest, boundary_method);
-
-data_to_plot = double(parc_interest);
-data_to_plot(medial_wall) = 0;
-clims = [0 num_parcels];
-            
+          
+% convert parcellated data into surface space
+data_temp = data_to_plot;
+data_to_plot = zeros(size(surface_to_plot.vertices,1),1);
+for parcel_ind = 1:num_parcels
+    parcel = parcels(parcel_ind);
+    data_to_plot(parc_interest==parcel) = data_temp(parcel_ind);
+end
+    
 if with_medial
+    if min(data_to_plot)<0
+        data_to_plot(medial_wall) = min(data_to_plot)*1.1;
+    elseif min(data_to_plot)>0
+        data_to_plot(medial_wall) = min(data_to_plot)*0.9;
+    else
+        data_to_plot(medial_wall) = -0.01;
+    end
+    clims = [min(data_to_plot), max(data_to_plot)];
+    
     fig = figure('Position', [200 200 600 300]);
     ax1 = axes('Position', [0.03 0.1 0.45 0.8]);
     obj1 = patch(ax1, 'Vertices', surface_to_plot.vertices, 'Faces', surface_to_plot.faces, 'FaceVertexCData', data_to_plot, ...
@@ -111,7 +125,6 @@ else
     elseif strcmpi(hemisphere, 'rh')
         view([90 0]);
     end
-    caxis(clims)
     colormap(ax, cmap)
     camlight('headlight')
 %     camlight(80,-10);
