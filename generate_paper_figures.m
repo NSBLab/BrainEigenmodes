@@ -1745,7 +1745,9 @@ for structure_ind = 1:length(structures)
         [~, sort_ind] = sort(data_to_plot, 'ascend');
         
         ax1_1 = axes('Position', [ax1.Position(1)-0.21 ax1.Position(2)+ax1.Position(4)*0 length_x*0.34 ax1.Position(4)]);
-        scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, new_map, 'filled');
+%         scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, new_map, 'filled');
+        scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, data_to_plot(sort_ind), 'filled');
+        colormap(ax1_1,bluewhitered)
         set(ax1_1, 'xlim', [min(subcortical_locs.(structure)(sort_ind,1)), max(subcortical_locs.(structure)(sort_ind,1))], ...
                  'ylim', [min(subcortical_locs.(structure)(sort_ind,2)), max(subcortical_locs.(structure)(sort_ind,2))], ...
                  'zlim', [min(subcortical_locs.(structure)(sort_ind,3)), max(subcortical_locs.(structure)(sort_ind,3))])
@@ -1767,7 +1769,9 @@ for structure_ind = 1:length(structures)
         [~, sort_ind] = sort(data_to_plot, 'ascend');
         
         ax1_2 = axes('Position', [ax1_1.Position(1)+ax1_1.Position(3)*1 ax1_1.Position(2) ax1_1.Position(3) ax1_1.Position(4)]);
-        p = scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, new_map, 'filled');
+%         scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, new_map, 'filled');
+        scatter3(subcortical_locs.(structure)(sort_ind,1), subcortical_locs.(structure)(sort_ind,2), subcortical_locs.(structure)(sort_ind,3), markersize, data_to_plot(sort_ind), 'filled');
+        colormap(ax1_2,bluewhitered)
         set(ax1_2, 'xlim', [min(subcortical_locs.(structure)(sort_ind,1)), max(subcortical_locs.(structure)(sort_ind,1))], ...
                  'ylim', [min(subcortical_locs.(structure)(sort_ind,2)), max(subcortical_locs.(structure)(sort_ind,2))], ...
                  'zlim', [min(subcortical_locs.(structure)(sort_ind,3)), max(subcortical_locs.(structure)(sort_ind,3))])
@@ -1818,7 +1822,7 @@ for structure_ind = 1:length(structures)
     ax2 = axes('Position', [init_x+factor_x*length_x*(structure_ind-1) init_y+factor_y*length_y*(0.98-1) length_x length_y]);
     imagesc(abs(subcortical_corr.(structure)))
     caxis([0 1])
-    colormap(cmap)
+    colormap(ax2, cmap)
     cbar = colorbar('fontsize', fontsize_axis-2);
     set(ax2, 'fontsize', fontsize_axis, 'ticklength', [0.02, 0.02], 'xtick', 5:5:20, 'ytick', 5:5:20)
     xlabel('gradient', 'fontsize', fontsize_label)

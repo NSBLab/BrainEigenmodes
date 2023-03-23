@@ -41,7 +41,9 @@ close(fig_temp)
 fig = figure;
 set(fig, 'Position', get(fig, 'Position').*[0 0 0.6 0.6]+[200 200 0 0])
 ax = axes('Position', [0.01 0.01 0.98 0.98]);
-obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, new_map, 'filled');
+% obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, new_map, 'filled');
+obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, data_to_plot_temp(sort_ind), 'filled');
+colormap(ax, bluewhitered)
 set(ax, 'xlim', [min(coords(sort_ind,1)), max(coords(sort_ind,1))], ...
         'ylim', [min(coords(sort_ind,2)), max(coords(sort_ind,2))], ...
         'zlim', [min(coords(sort_ind,3)), max(coords(sort_ind,3))])

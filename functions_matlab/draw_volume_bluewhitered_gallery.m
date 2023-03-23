@@ -51,7 +51,8 @@ for mode=1:num_modes
     [~, sort_ind] = sort(data_to_plot_temp, 'ascend');
 
     ax = axes('Position', [init_x+factor_x*length_x*(mode-1) init_y length_x length_y]);
-    obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, new_map, 'filled');
+%     obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, new_map, 'filled');
+    obj1 = scatter3(coords(sort_ind,1), coords(sort_ind,2), coords(sort_ind,3), markersize, data_to_plot_temp(sort_ind), 'filled');
     set(ax, 'xlim', [min(coords(sort_ind,1)), max(coords(sort_ind,1))], ...
             'ylim', [min(coords(sort_ind,2)), max(coords(sort_ind,2))], ...
             'zlim', [min(coords(sort_ind,3)), max(coords(sort_ind,3))])
