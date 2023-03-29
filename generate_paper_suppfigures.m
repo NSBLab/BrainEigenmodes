@@ -1937,7 +1937,7 @@ for type_ind = 1:length(type_name_list)
     
     if type_ind==3
         % colorbar
-        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.23, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
+        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.28, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
         imagesc(linspace(-1,1,1000), ones(1,1000), linspace(-1,1,1000))
         set(ax2_temp, 'fontsize', fontsize_axis-2, 'ytick', [], 'xtick', [-1 0 1], 'xticklabel', {'neg', '0', 'pos'});
         colormap(ax2_temp,bluewhitered)
@@ -2056,7 +2056,7 @@ for type_ind = 1:length(type_name_list)
     
     if type_ind==3
         % colorbar
-        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.23, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
+        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.28, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
         imagesc(linspace(-1,1,1000), ones(1,1000), linspace(-1,1,1000))
         set(ax2_temp, 'fontsize', fontsize_axis-2, 'ytick', [], 'xtick', [-1 0 1], 'xticklabel', {'neg', '0', 'pos'});
         colormap(ax2_temp,bluewhitered)
@@ -2178,7 +2178,7 @@ for type_ind = 1:length(type_name_list)
     
     if type_ind==3
         % colorbar
-        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.23, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
+        ax2_temp = axes('position', [ax2_2.Position(1)-ax2_2.Position(3)*0.28, ax2_2.Position(2)+0.006, ax2_2.Position(3)*0.5, 0.006]);
         imagesc(linspace(-1,1,1000), ones(1,1000), linspace(-1,1,1000))
         set(ax2_temp, 'fontsize', fontsize_axis-2, 'ytick', [], 'xtick', [-1 0 1], 'xticklabel', {'neg', '0', 'pos'});
         colormap(ax2_temp,bluewhitered)
