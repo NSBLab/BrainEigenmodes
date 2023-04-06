@@ -2,6 +2,8 @@
 
 ![cover](cover_image.jpg)
 
+***VERY IMPORTANT NOTE:*** **This repo has been moved to our new NSBLab GitHub page. Hence, this repo is now a legacy copy, so please follow all updates at the new repo [HERE](https://github.com/NSBLab/BrainEigenmodes).**
+
 Code and data for the manuscript "[Geometric constraints on human brain function](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v2)"
 
 Uses an eigenmode-based analysis to study how the geometric structure of the brain constrains function captured by fMRI
@@ -21,6 +23,9 @@ The code also serves as a toolbox for people to calculate surface and/or volume 
 9. `demo_wave_model_simulation.m`: MATLAB script to demonstrate how to simulate waves on a cortical surface using eigenmodes
 10. `generate_paper_figures_main_bioRxiv.m`: MATLAB script to generate the Main figures of the bioRxiv preprint
 11. `generate_paper_figures_supp_bioRxiv.m`: MATLAB script to generate the Supplementary figures of the bioRxiv preprint
+12. `generate_paper_figures_main_Nature.m`: MATLAB script to generate the Main figures of the Nature paper
+13. `generate_paper_figures_supp_Nature.m`: MATLAB script to generate the Supplementary figures of the Nature paper
+14. `generate_paper_figures_extended_Nature.m`: MATLAB script to generate the Extended Data figures of the Nature paper
 
 ## Installation
 
