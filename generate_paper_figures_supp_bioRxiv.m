@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% generate_paper_suppfigures.m
+%%% generate_paper_figures_supp_bioRxiv.m
 %%%
-%%% MATLAB script to generate the supplementary figures of the paper
+%%% MATLAB script to generate the Supplementary figures of the bioRxiv preprint
 %%%
 %%% NOTE : The configuration of your computer (e.g., screen resolution)
 %%%        affects how the figures created will look. Hence, they will not 
@@ -24,7 +24,7 @@ parc_name = 'Glasser360';
 
 data_empirical_folder = 'data/empirical';
 data_results_folder = 'data/results';
-data_figures_folder = 'data/figures';
+data_figures_folder = 'data/figures_bioRxiv';
 data_template_surfaces_folder = 'data/template_surfaces_volumes';
 data_template_eigenmodes_folder = 'data/template_eigenmodes';
 
@@ -1001,16 +1001,16 @@ medial_wall = find(~cortex);
 mode_list = [1:5, 10,25,50,100,200];
 num_modes_to_plot = length(mode_list);
 
-factor_x_small = 0.53;
-factor_x_big = 1.1;
+factor_x_small = 0.55;
+factor_x_big = 1.2;
 factor_y = 1.1;
 
-fig = figure('Position', [200 200 800 1200]);
+fig = figure('Position', [200 200 600 1000]);
 
-init_x = 0.1;
+init_x = 0.11;
 init_y = 0.505;
-length_x = (0.99-init_x)/(factor_x_small + factor_x_big*(4-1) + 1);
-length_y = (0.96-init_y)/(factor_y*(num_modes_to_plot-1) + 1);
+length_x = (1-init_x)/(factor_x_small+factor_x_big*(4-1) + 1);
+length_y = (0.95-init_y)/(factor_y*(num_modes_to_plot-1) + 1);
 
 for basis_ind=1:4
     if basis_ind==8

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% generate_paper_figures.m
+%%% generate_paper_figures_main_bioRxiv.m
 %%%
-%%% MATLAB script to generate the main figures of the paper
+%%% MATLAB script to generate the Main figures of the bioRxiv preprint
 %%%
 %%% NOTE : The configuration of your computer (e.g., screen resolution)
 %%%        affects how the figures created will look. Hence, they will not 
@@ -24,7 +24,7 @@ parc_name = 'Glasser360';
 
 data_empirical_folder = 'data/empirical';
 data_results_folder = 'data/results';
-data_figures_folder = 'data/figures';
+data_figures_folder = 'data/figures_bioRxiv';
 data_template_surfaces_folder = 'data/template_surfaces_volumes';
 data_template_eigenmodes_folder = 'data/template_eigenmodes';
 
