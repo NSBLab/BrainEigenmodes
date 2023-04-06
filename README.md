@@ -2,7 +2,7 @@
 
 ![cover](cover_image.jpg)
 
-***VERY IMPORTANT NOTE:*** **This repo has been moved to our new NSBLab GitHub page. Hence, this repo is now a legacy copy, so please follow all updates at the new repo [HERE](https://github.com/NSBLab/BrainEigenmodes).**
+***VERY IMPORTANT NOTE:*** **This repo has been moved to our new [NSBLab GitHub page](https://github.com/NSBLab). Hence, this repo is now a legacy copy, so please follow all updates at the new repo [HERE](https://github.com/NSBLab/BrainEigenmodes).**
 
 Code and data for the manuscript "[Geometric constraints on human brain function](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v2)"
 
