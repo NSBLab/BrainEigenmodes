@@ -2,7 +2,7 @@
 
 ![cover](cover_image.jpg)
 
-Code and data for the manuscript "[Geometric constraints on human brain function](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v2)"
+Code and data for the manuscript "[Geometric constraints on human brain function](https://www.nature.com/articles/s41586-023-06098-1)"
 
 Uses an eigenmode-based analysis to study how the geometric structure of the brain constrains function captured by fMRI
 
@@ -68,7 +68,7 @@ If you use our code in your research, please cite us as follows:
 
 [PREPRINT] J.C. Pang, K.M. Aquino, M. Oldehinkel, P.A. Robinson, B.D. Fulcher, M. Breakspear, A. Fornito, Geometric constraints on human brain function, bioRxiv (2022) (DOI: [10.1101/2022.10.04.510897](https://www.biorxiv.org/content/10.1101/2022.10.04.510897v2))
 
-[ARTICLE] J.C. Pang, K.M. Aquino, M. Oldehinkel, P.A. Robinson, B.D. Fulcher, M. Breakspear, A. Fornito, Geometric constraints on human brain function (TO BE UPDATED)
+[ARTICLE] J.C. Pang, K.M. Aquino, M. Oldehinkel, P.A. Robinson, B.D. Fulcher, M. Breakspear, A. Fornito, Geometric constraints on human brain function, Nature (2023) (VOLUME NUMBER TO BE UPDATED) (DOI: [10.1038/s41586-023-06098-1](https://www.nature.com/articles/s41586-023-06098-1))
 
 ## Further details
 
