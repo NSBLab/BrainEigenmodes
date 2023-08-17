@@ -23,6 +23,14 @@ if nargin<3
     method = 'matrix';
 end
 
+%%% ENSURE THAT `eigenvectors` CONTAINS A COLUMN OF CONSTANTS %%%
+eigenvectors = [eigenvectors, ones(M, 1)];
+% if eigenvectors already had a constant column, then the rank will not
+% change (note that N <= M by force)
+hasConstantCol = rank(eigenvectors) == size(eigenvectors, 2)-1;
+% if it had a constant column, remove the new addition
+if hasConstantCol; eigenvectors = eigenvectors(:,1:(end-1)); end
+
 switch method
     case 'matrix'
         coeffs = (eigenvectors.'*eigenvectors)\(eigenvectors.'*data);
@@ -39,5 +47,8 @@ switch method
             coeffs(:,p) = regress(data(:,p), eigenvectors);
         end
 end
+
+% if it didn't have a constant column, remove the extra coefficient here
+if ~hasConstantCol; coeffs = coeffs(1:(end-1)); end
     
 end
