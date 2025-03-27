@@ -56,6 +56,7 @@ for mode=1:num_modes
     set(ax, 'xlim', [min(coords(sort_ind,1)), max(coords(sort_ind,1))], ...
             'ylim', [min(coords(sort_ind,2)), max(coords(sort_ind,2))], ...
             'zlim', [min(coords(sort_ind,3)), max(coords(sort_ind,3))])
+    colormap(ax,bluewhitered)
     axis square
     view(camera_view)
     axis off
