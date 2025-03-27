@@ -47,7 +47,7 @@ Some important aspects you need to do before running `demo_eigenmode_calculation
 1. Install [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) and load module if using an HPC system.
 2. Install [Connectome Workbench](https://www.humanconnectome.org/software/get-connectome-workbench) and load module if using an HPC system.
 3. Install [Gmsh](https://gmsh.info/) and load module if using an HPC system.
-4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy)(v1.0.0), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
+4. Install the following Python libraries (e.g., via pip): [lapy](https://github.com/Deep-MI/LaPy)(v1.0.1), [nibabel](https://nipy.org/nibabel/), and [brainspace](https://brainspace.readthedocs.io/en/latest/pages/install.html)
 5. Make sure you also have the following common Python libraries: numpy, scipy, os, argparse, subprocess
 
 Some of the MATLAB-based scripts depend on packages developed by others. Copies of these packages have been stored in the `functions_matlab/` folder to ensure version compatibility. However, please visit their respective links below to get more details and don't forget to give them some love.
