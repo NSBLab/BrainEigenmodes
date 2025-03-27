@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 Calculate the eigenmodes of a volume
+Updated to lapy 1.0.1
 
-@author: James Pang and Kevin Aquino, Monash University, 2022
+Original authors: James Pang and Kevin Aquino, Monash University, 2022
+@author: James Pang, Monash University, 2025
 """
 
 # Import all the libraries
-from lapy import Solver, TetIO
+from lapy import Solver, TetMesh
 import nibabel as nib
 import numpy as np
 from scipy.interpolate import griddata
@@ -222,7 +224,7 @@ def calc_eig(nifti_input_filename, output_eval_filename, output_emode_filename, 
     tetra_file = make_tetra_file(nifti_input_filename)
 
     # load tetrahedral surface (as a brainspace object)
-    tetra = TetIO.import_vtk(tetra_file)
+    tetra = TetMesh.read_vtk(tetra_file)
 
     # normalize tetrahedral surface
     tetra_norm = normalize_vtk(tetra, nifti_input_filename, normalization_type, normalization_factor)
@@ -296,7 +298,7 @@ def calc_volume_eigenmodes(nifti_input_filename, nifti_output_filename, output_e
 
     # load tetrahedral surface
     tetra_file = nifti_input_filename + '.tetra.vtk'
-    tetra = TetIO.import_vtk(tetra_file)
+    tetra = TetMesh.read_vtk(tetra_file)
     points_surface = tetra.v
 
     # initialize nifti output array

@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 Calculate the eigenmodes of a cortical surface
+Updated to lapy 1.0.1
 
-@author: James Pang and Kevin Aquino, Monash University, 2022
+Original authors: James Pang and Kevin Aquino, Monash University, 2022
+@author: James Pang, Monash University, 2025
 """
 
 # Import all the libraries
-from lapy import Solver, TriaIO
+from lapy import Solver, TriaMesh
 import numpy as np
 import nibabel as nib
 import brainspace.mesh as mesh
@@ -121,17 +123,17 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
     surface_cut = mesh.mesh_operations.mask_points(surface_orig, mask)
 
     if save_cut == 1:
-        # old method: save vtk of surface_cut and open via lapy TriaIO 
+        # old method: save vtk of surface_cut and open via lapy TriaMesh
         # The writing phase of this process is very slow especially for large surfaces
         temp_cut_filename='temp_cut.vtk'
         create_temp_surface(surface_cut, temp_cut_filename)
         # load surface (as a lapy object)
-        tria = TriaIO.import_vtk(temp_cut_filename)
+        tria = TriaMesh.read_vtk(temp_cut_filename)
     else:
         # new method: replace v and t of surface_orig with v and t of surface_cut
         # faster version without the need to write the vtk file
         # load surface (as a lapy object)
-        tria = TriaIO.import_vtk(surface_input_filename)
+        tria = TriaMesh.read_vtk(surface_input_filename)
         tria.v = surface_cut.Points
         tria.t = np.reshape(surface_cut.Polygons, [surface_cut.n_cells, 4])[:,1:4]
 
@@ -170,7 +172,7 @@ def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename,
     """
 
     # load surface (as a lapy object)
-    tria = TriaIO.import_vtk(surface_input_filename)
+    tria = TriaMesh.read_vtk(surface_input_filename)
 
     # calculate eigenvalues and eigenmodes
     evals, emodes = calc_eig(tria, num_modes)
