@@ -15,6 +15,8 @@ import nibabel as nib
 import brainspace.mesh as mesh
 import os
 from argparse import ArgumentParser
+import scipy.sparse as sp
+from scipy.io import savemat
 
 def calc_eig(tria, num_modes):
     """Calculate the eigenvalues and eigenmodes of a surface.
@@ -36,8 +38,9 @@ def calc_eig(tria, num_modes):
     
     fem = Solver(tria)
     evals, emodes = fem.eigs(k=num_modes)
+    mass = fem.mass
     
-    return evals, emodes
+    return evals, emodes, mass
 
 def create_temp_surface(surface_input, surface_output_filename):
     """Write surface to a new vtk file.
@@ -89,7 +92,18 @@ def get_indices(surface_original, surface_new):
     
     return indices
 
-def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes):
+def save_mass(mass, output_mass_filename):
+    """Save sparse mass matrix B as .npz (scipy) or .mat (MATLAB) based on extension."""
+    ext = os.path.splitext(output_mass_filename)[1].lower()
+    if ext == '.npz':
+        sp.save_npz(output_mass_filename, mass)
+    elif ext == '.mat':
+        savemat(output_mass_filename, {'B': mass})   # MATLAB sparse matrix
+    else:
+        raise ValueError(
+            "output_mass_filename must end in .npz or .mat (got '%s')" % ext)
+
+def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, output_mass_filename, save_cut, num_modes):
     """Main function to calculate the eigenmodes of a cortical surface with application of a mask (e.g., to remove the medial wall).
 
     Parameters
@@ -137,8 +151,8 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
         tria.v = surface_cut.Points
         tria.t = np.reshape(surface_cut.Polygons, [surface_cut.n_cells, 4])[:,1:4]
 
-    # calculate eigenvalues and eigenmodes
-    evals, emodes = calc_eig(tria, num_modes)
+    # calculate eigenvalues and eigenmodes (add mass)
+    evals, emodes, mass = calc_eig(tria, num_modes)
     
     # get indices of vertices of surface_orig that match surface_cut
     indices = get_indices(surface_orig, surface_cut)
@@ -147,16 +161,27 @@ def calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_
     emodes_reshaped = np.zeros([surface_orig.n_points,np.shape(emodes)[1]])
     for mode in range(np.shape(emodes)[1]):
         emodes_reshaped[indices,mode] = np.expand_dims(emodes[:,mode], axis=1);
+    
+    # Embed using original index
+    idx = indices.flatten()
+    mass_coo = mass.tocoo()
+    mass_full = sp.coo_matrix(
+        (mass_coo.data, (idx[mass_coo.row], idx[mass_coo.col])),
+        shape=(surface_orig.n_points, surface_orig.n_points)
+    ).tocsc()
         
     # save results to text files
     np.savetxt(output_eval_filename, evals)
     np.savetxt(output_emode_filename, emodes_reshaped)
 
+    # save mass matrix
+    save_mass(mass_full, output_mass_filename) 
+
     if save_cut == 0:
         if os.path.exists('temp_cut.vtk'):
             os.remove('temp_cut.vtk')
 
-def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes):
+def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, output_mass_filename, num_modes):
     """Main function to calculate the eigenmodes of a cortical surface without application of a mask.
 
     Parameters
@@ -174,18 +199,22 @@ def calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename,
     # load surface (as a lapy object)
     tria = TriaMesh.read_vtk(surface_input_filename)
 
-    # calculate eigenvalues and eigenmodes
-    evals, emodes = calc_eig(tria, num_modes)
+    # calculate eigenvalues and eigenmodes (add mass)
+    evals, emodes, mass = calc_eig(tria, num_modes)
         
     # save eigenmode results
     np.savetxt(output_eval_filename, evals)
     np.savetxt(output_emode_filename, emodes)
+
+    # save mass matrix
+    save_mass(mass, output_mass_filename)
 
 def main(raw_args=None):    
     parser = ArgumentParser(epilog="surface_eigenmodes.py -- A function to calculate the eigenmodes of a cortical surface. James Pang, Monash University, 2022 <james.pang1@monash.edu>")
     parser.add_argument("surface_input_filename", help="An input surface in vtk format", metavar="surface_input.vtk")
     parser.add_argument("output_eval_filename", help="An output text file where the eigenvalues will be stored", metavar="evals.txt")
     parser.add_argument("output_emode_filename", help="An output text file where the eigenmodes will be stored", metavar="emodes.txt")
+    parser.add_argument("output_mass_filename", help="An output .npz file where the mass matrix B will be stored", metavar="mass.npz")
     parser.add_argument("-save_cut", dest="save_cut", default=0, help="Logical value to decide whether to write the masked version of the input surface", metavar="0")
     parser.add_argument("-N", dest="num_modes", default=20, help="Number of eigenmodes to be calculated, default=20", metavar="20")
     parser.add_argument("-is_mask", dest="is_mask", default=1, help="Logical value to decide whether to apply the mask", metavar="1")
@@ -196,6 +225,7 @@ def main(raw_args=None):
     surface_input_filename   = args.surface_input_filename
     output_eval_filename     = args.output_eval_filename
     output_emode_filename    = args.output_emode_filename
+    output_mass_filename     = args.output_mass_filename
     save_cut                 = int(args.save_cut)
     num_modes                = int(args.num_modes)
     is_mask                  = int(args.is_mask)
@@ -203,12 +233,12 @@ def main(raw_args=None):
     #-------------------------------------------------------------------------------
 
     if is_mask == 0:
-        calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, num_modes)
+        calc_surface_eigenmodes_nomask(surface_input_filename, output_eval_filename, output_emode_filename, output_mass_filename, num_modes)
     else:
         if mask_input_filename == None:
             print('ERROR: You need to provide a mask file')
         else:
-            calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, save_cut, num_modes)
+            calc_surface_eigenmodes(surface_input_filename, mask_input_filename, output_eval_filename, output_emode_filename, output_mass_filename, save_cut, num_modes)
     
    
 if __name__ == '__main__':

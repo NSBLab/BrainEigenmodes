@@ -33,8 +33,8 @@ else
     ud=1;
 end
 
-ind=find(W);                                %find all links
-E=sortrows([ind W(ind)], -2);               %sort by magnitude
+ind=find(W);                                 %find all links
+E=sortrows([ind double(W(ind))], -2);        %sort by magnitude
 en=round(length(ind)*p);                     %number of links to be preserved
 
 if strcmpi(weight_to_remove, 'weakest')
